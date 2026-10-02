@@ -243,7 +243,7 @@ footer{margin-top:46px;color:var(--muted);font-size:12px;letter-spacing:.03em}
 | 1.1.5 | Google Dorking | Info | `site:target.com inurl:admin \| filetype:pdf \| intitle:"index of"` — use GHDB | ☐ |
 | 1.1.6 | Wayback Machine / Archived Files | Info | `waybackurls target.com \| sort -u > wb.txt` \| `gau target.com` | ☐ |
 | 1.1.7 | Technology Fingerprinting | Info | `whatweb https://target.com` \| `wappalyzer` (browser) \| `httpx -tech-detect` | ☐ |
-| 1.1.8 | JS File Analysis (secrets/endpoints) | High if leaked | `katana -u https://target.com -d 3 -js -o js.txt` → `nuclei -l js.txt -t exposures/` \| run `secretfinder` | ☐ |
+| 1.1.8 | JS File Analysis (secrets/endpoints) | High if leaked | `katana -u https://target.com -d 3 js -o js.txt` → `nuclei -l js.txt -t exposures/` \| run `secretfinder` | ☐ |
 | 1.1.9 | Identify .git/.svn/.env exposure | Critical | `curl -s https://target.com/.git/HEAD` \| `git-dumper https://target.com/.git/ ./repo` | ☐ |
 | 1.1.10 | Cloud Storage Bucket Discovery | High | `s3scanner scan --bucket-file buckets.txt` \| grep for `S3_BUCKET` in JS | ☐ |
 | 1.1.11 | Port Scan (Full TCP + Top UDP) | Info | `nmap -sS -p- --min-rate 5000 -oN full.txt target.com` then `nmap -sC -sV -p <ports> target.com` | ☐ |
